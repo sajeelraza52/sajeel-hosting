@@ -1,1 +1,956 @@
-# sajeel-hosting
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sajeel Mods • Premium Website Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --brand-pink:#ff2d7a;
+  --brand-purple:#a855f7;
+  --brand-cyan:#00d9ff;
+  --brand-grad:linear-gradient(135deg,#ff2d7a 0%,#a855f7 50%,#00d9ff 100%);
+  --brand-grad-soft:linear-gradient(135deg,rgba(255,45,122,.14),rgba(168,85,247,.10),rgba(0,217,255,.08));
+  --brand-glow:0 0 32px rgba(255,45,122,.32);
+  --brand-glow-2:0 0 40px rgba(168,85,247,.28);
+
+  --bg:#06060c;
+  --bg-2:#0b0b14;
+  --surface:rgba(17,17,28,.68);
+  --surface-2:rgba(22,22,35,.85);
+  --border:rgba(255,255,255,.07);
+  --border-2:rgba(255,255,255,.13);
+  --border-brand:rgba(255,45,122,.28);
+  --text:#f4f4fa;
+  --dim:#8a8aa2;
+  --dim-2:#5a5a72;
+  --success:#22d3a4;
+  --danger:#ff4d6d;
+  --radius:16px;
+  --radius-sm:10px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,Roboto,Arial,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(ellipse 55% 45% at 15% -10%, rgba(255,45,122,.16), transparent 65%),
+    radial-gradient(ellipse 50% 45% at 85% 0%, rgba(168,85,247,.13), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 50% 110%, rgba(0,217,255,.08), transparent 70%);
+  background-attachment:fixed;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 80%);
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+button,input,a{font-family:inherit}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:20px 16px 60px}
+
+/* ===== Topbar ===== */
+.topbar{
+  display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--surface);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
+  margin-bottom:22px;position:sticky;top:12px;z-index:60;
+}
+.brand-mark{
+  width:42px;height:42px;flex:0 0 42px;border-radius:11px;
+  background:var(--brand-grad);display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff;
+  letter-spacing:.5px;
+  box-shadow:0 4px 18px rgba(255,45,122,.4),0 0 0 1px rgba(255,255,255,.1) inset;
+  position:relative;overflow:hidden;
+}
+.brand-mark::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.25) 50%,transparent 60%);
+  background-size:200% 200%;
+  animation:shine 4s ease-in-out infinite;
+}
+@keyframes shine{
+  0%,100%{background-position:200% 200%}
+  50%{background-position:-100% -100%}
+}
+.brand-text{min-width:0;line-height:1.2}
+.brand-text h1{
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:1px;color:var(--text);
+}
+.brand-text h1 span{
+  background:var(--brand-grad);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.brand-text p{font-size:11px;color:var(--dim);margin-top:2px;letter-spacing:.3px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.status-pill{
+  display:flex;align-items:center;gap:6px;
+  font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:20px;
+  background:rgba(34,211,164,.1);color:#22d3a4;
+  border:1px solid rgba(34,211,164,.22);letter-spacing:.3px;
+}
+.status-pill .dot{
+  width:6px;height:6px;border-radius:50%;background:currentColor;
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px currentColor}50%{opacity:.35;box-shadow:0 0 4px currentColor}}
+.icon-link{
+  width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
+  background:rgba(255,255,255,.03);color:var(--dim);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;transition:all .2s;flex:0 0 34px;
+}
+.icon-link:hover{color:#25D366;border-color:rgba(37,211,102,.35);background:rgba(37,211,102,.08)}
+.icon-link svg{width:16px;height:16px;fill:currentColor}
+
+/* ===== Hero ===== */
+.hero{text-align:center;margin-bottom:26px;padding:6px 0}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 12px;border-radius:20px;
+  background:var(--brand-grad-soft);
+  border:1px solid var(--border-brand);
+  color:#ff8fb5;font-size:10.5px;font-weight:700;
+  letter-spacing:2px;margin-bottom:16px;
+  font-family:'Space Grotesk',sans-serif;
+  box-shadow:0 0 20px rgba(255,45,122,.12);
+}
+.hero-badge .star{
+  width:5px;height:5px;border-radius:50%;background:#ff8fb5;
+  box-shadow:0 0 8px #ff8fb5;
+}
+.hero h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:36px;font-weight:700;letter-spacing:-.8px;
+  line-height:1.14;
+}
+.hero h2 .accent{
+  background:var(--brand-grad);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{
+  color:var(--dim);font-size:14px;margin-top:10px;
+  max-width:520px;margin-left:auto;margin-right:auto;
+}
+@media(max-width:600px){
+  .hero h2{font-size:26px;letter-spacing:-.4px}
+  .hero p{font-size:13px}
+}
+
+/* ===== Layout ===== */
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.sites-card{grid-column:1/-1}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+
+/* ===== Card ===== */
+.card{
+  background:var(--surface);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:0 8px 32px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.035);
+  overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease;
+  position:relative;
+}
+.card:hover{border-color:var(--border-2);box-shadow:0 12px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05)}
+.card-head{
+  padding:13px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(255,255,255,.015);
+}
+.card-head h3{
+  font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;
+  letter-spacing:1.2px;color:var(--text);
+  display:flex;align-items:center;gap:8px;
+}
+.card-head h3 .step{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:18px;height:18px;border-radius:5px;
+  background:var(--brand-grad-soft);color:#ff8fb5;
+  font-size:9.5px;font-weight:800;letter-spacing:0;
+  border:1px solid var(--border-brand);
+}
+.card-head .pill{
+  font-size:10.5px;padding:3px 9px;border-radius:20px;
+  background:rgba(255,255,255,.04);color:var(--dim);
+  border:1px solid var(--border);font-weight:600;
+}
+.card-body{padding:16px 18px}
+
+/* ===== Form Fields ===== */
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field > label{
+  display:block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--dim);margin-bottom:7px;
+}
+.input-wrap{
+  display:flex;align-items:center;
+  border:1px solid var(--border-2);border-radius:var(--radius-sm);
+  background:rgba(0,0,0,.35);padding:0 12px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.input-wrap:focus-within{
+  border-color:var(--brand-pink);
+  box-shadow:0 0 0 3px rgba(255,45,122,.12),0 0 24px rgba(255,45,122,.08);
+}
+.input-wrap .prefix{
+  color:var(--brand-pink);font-weight:700;opacity:.6;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;
+}
+.input-wrap input{
+  flex:1;background:transparent;border:none;outline:none;
+  padding:11px 8px;color:var(--text);font-size:14px;
+  font-family:'Inter',sans-serif;
+}
+.input-wrap input::placeholder{color:var(--dim-2)}
+.input-wrap .status{font-size:13px;width:16px;text-align:center;font-weight:700}
+.hint{font-size:11.5px;color:var(--dim-2);margin-top:6px;line-height:1.5}
+.msg{font-size:12px;color:var(--danger);min-height:16px;margin-top:8px;font-weight:500}
+
+/* ===== Dropzone ===== */
+.dropzone{
+  border:1.5px dashed var(--border-2);border-radius:12px;
+  padding:26px 16px;text-align:center;cursor:pointer;
+  background:rgba(0,0,0,.28);transition:all .22s;
+  position:relative;
+}
+.dropzone:hover{
+  border-color:var(--border-brand);
+  background:rgba(255,45,122,.035);
+}
+.dropzone.drag{
+  border-color:var(--brand-pink);
+  background:rgba(255,45,122,.08);
+  box-shadow:inset 0 0 40px rgba(255,45,122,.12),0 0 0 3px rgba(255,45,122,.1);
+  transform:scale(1.01);
+}
+.dz-icon{
+  width:42px;height:42px;border-radius:11px;margin:0 auto 10px;
+  background:var(--brand-grad-soft);
+  border:1px solid var(--border-brand);
+  display:flex;align-items:center;justify-content:center;
+  color:#ff8fb5;font-size:18px;
+  box-shadow:0 0 20px rgba(255,45,122,.15);
+}
+.dz-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:.1px}
+.dz-sub{font-size:11px;color:var(--dim-2);margin-top:4px;letter-spacing:.2px}
+
+/* ===== File List ===== */
+.file-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.file-list:empty{display:none}
+.file-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:9px;
+  background:rgba(255,255,255,.025);border:1px solid var(--border);
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.fi-icon{
+  width:30px;height:30px;border-radius:7px;flex:0 0 30px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;
+  background:var(--brand-grad-soft);
+  border:1px solid var(--border-brand);color:#ff8fb5;
+}
+.fi-info{flex:1;min-width:0}
+.fi-name{
+  font-size:12.5px;font-weight:600;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.fi-size{font-size:10.5px;color:var(--dim-2);margin-top:1px}
+.fi-remove{
+  width:24px;height:24px;border-radius:6px;border:1px solid var(--border);
+  background:rgba(255,77,109,.08);color:#ff8095;cursor:pointer;
+  font-size:10px;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex:0 0 24px;font-weight:700;
+}
+.fi-remove:hover{background:rgba(255,77,109,.2);border-color:rgba(255,77,109,.35);transform:scale(1.08)}
+.file-meta{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;color:var(--dim-2);margin-top:10px;
+  padding-top:10px;border-top:1px dashed var(--border);
+}
+.file-meta span:first-child{color:var(--dim)}
+.link-btn{
+  margin-left:auto;background:none;border:none;cursor:pointer;
+  color:var(--brand-pink);font-size:11px;font-weight:600;padding:0;
+  text-decoration:underline;text-underline-offset:3px;
+  transition:color .15s;
+}
+.link-btn:hover{color:#ff8fb5}
+.link-btn.danger{color:#ff6b8a}
+.link-btn.danger:hover{color:#ffb3c1}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:10px 16px;border-radius:var(--radius-sm);
+  border:1px solid var(--border-2);
+  background:rgba(255,255,255,.04);color:var(--text);
+  font-size:12.5px;font-weight:600;letter-spacing:.3px;
+  cursor:pointer;transition:all .22s ease;
+  text-decoration:none;white-space:nowrap;
+}
+.btn:hover{background:rgba(255,255,255,.08);border-color:var(--border-2);color:var(--text)}
+.btn:active{transform:scale(.98)}
+.btn.primary{
+  background:var(--brand-grad);
+  border:none;color:#fff;
+  box-shadow:0 4px 20px rgba(255,45,122,.35),0 1px 0 rgba(255,255,255,.15) inset;
+}
+.btn.primary:hover{
+  box-shadow:0 8px 32px rgba(255,45,122,.5),0 1px 0 rgba(255,255,255,.2) inset;
+  transform:translateY(-1px);color:#fff;
+}
+.btn.primary:active{transform:translateY(0) scale(.99)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.btn.sm{padding:6px 11px;font-size:11px;border-radius:7px}
+.btn-block{width:100%;padding:13px;font-size:13px;letter-spacing:.5px}
+.btn.danger{
+  color:#ff8095;border-color:rgba(255,77,109,.28);
+  background:rgba(255,77,109,.06);
+}
+.btn.danger:hover{background:rgba(255,77,109,.15);color:#ffb3c1}
+
+/* ===== Result box ===== */
+.empty{
+  text-align:center;padding:36px 10px;color:var(--dim-2);
+}
+.empty-icon{
+  width:52px;height:52px;border-radius:14px;margin:0 auto 12px;
+  background:var(--brand-grad-soft);
+  border:1px solid var(--border-brand);
+  display:flex;align-items:center;justify-content:center;
+  color:#ff8fb5;font-size:20px;
+  box-shadow:0 0 28px rgba(255,45,122,.15);
+}
+.empty p{font-size:12.5px;line-height:1.6}
+
+.success-banner{
+  padding:10px 14px;border-radius:10px;
+  background:var(--brand-grad-soft);
+  border:1px solid var(--border-brand);
+  color:#ff8fb5;font-size:11.5px;font-weight:700;letter-spacing:1.4px;
+  text-align:center;margin-bottom:14px;
+  box-shadow:0 0 24px rgba(255,45,122,.12);
+  font-family:'Space Grotesk',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.success-banner::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:#22d3a4;box-shadow:0 0 8px #22d3a4;
+}
+.link-row{display:flex;gap:6px;margin-bottom:12px}
+.link-input{
+  flex:1;background:rgba(0,0,0,.45);border:1px solid var(--border);
+  border-radius:9px;padding:10px 12px;color:#00d9ff;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11.5px;
+  outline:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  min-width:0;
+}
+.result-actions{display:flex;gap:8px;flex-wrap:wrap}
+.result-actions .btn{flex:1;min-width:130px}
+
+/* ===== Sites list ===== */
+#sitesList{display:flex;flex-direction:column;gap:8px}
+#sitesList:empty{display:none}
+.site-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 13px;border-radius:11px;
+  background:rgba(255,255,255,.025);border:1px solid var(--border);
+  transition:all .2s;
+}
+.site-item:hover{
+  background:rgba(255,255,255,.045);
+  border-color:var(--border-brand);
+  box-shadow:0 0 20px rgba(255,45,122,.06);
+}
+.si-dot{
+  width:8px;height:8px;border-radius:50%;flex:0 0 8px;
+  background:var(--brand-grad);
+  box-shadow:0 0 10px rgba(255,45,122,.6);
+}
+.si-main{flex:1;min-width:0}
+.si-name{
+  font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;
+  color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.2px;
+}
+.si-meta{font-size:10.5px;color:var(--dim-2);margin-top:2px}
+.si-actions{display:flex;gap:4px}
+.icon-btn{
+  width:30px;height:30px;border-radius:7px;border:1px solid var(--border);
+  background:rgba(255,255,255,.03);color:var(--dim);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:12px;transition:all .15s;text-decoration:none;
+  flex:0 0 30px;
+}
+.icon-btn:hover{
+  color:var(--brand-pink);border-color:var(--border-brand);
+  background:rgba(255,45,122,.08);
+}
+.icon-btn.danger:hover{
+  color:#ff8095;border-color:rgba(255,77,109,.35);
+  background:rgba(255,77,109,.08);
+}
+
+/* ===== Footer ===== */
+.footer{
+  text-align:center;margin-top:32px;padding-top:24px;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--dim-2);line-height:2;
+}
+.footer-brand{
+  font-family:'Space Grotesk',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:1px;margin-bottom:4px;
+}
+.footer-brand b{
+  background:var(--brand-grad);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.footer p{font-size:11px;color:var(--dim-2);letter-spacing:.3px}
+.wa-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:12px;padding:9px 18px;border-radius:9px;
+  border:1px solid rgba(37,211,102,.35);
+  background:rgba(37,211,102,.08);
+  color:#25D366;font-size:11.5px;font-weight:700;
+  letter-spacing:.5px;text-decoration:none;transition:all .22s;
+  font-family:'Space Grotesk',sans-serif;
+}
+.wa-btn:hover{background:#25D366;color:#000;box-shadow:0 0 24px rgba(37,211,102,.45)}
+.wa-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* ===== Toasts ===== */
+.toasts{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  z-index:1000;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;width:100%;padding:0 16px;
+}
+.toast{
+  padding:10px 16px;border-radius:10px;
+  background:rgba(17,17,28,.95);border:1px solid var(--border-2);
+  color:var(--text);font-size:12.5px;font-weight:600;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  max-width:400px;text-align:center;
+  animation:toastIn .28s cubic-bezier(.34,1.56,.64,1);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.toast.success{
+  border-color:rgba(34,211,164,.45);color:#7de6c5;
+  box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 22px rgba(34,211,164,.12);
+}
+.toast.error{
+  border-color:rgba(255,77,109,.45);color:#ff9caf;
+  box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 22px rgba(255,77,109,.12);
+}
+.toast.out{animation:toastOut .22s forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(10px) scale(.95)}}
+
+/* ===== Responsive ===== */
+@media(max-width:600px){
+  .wrap{padding:14px 12px 40px}
+  .topbar{padding:11px 14px;gap:10px;top:8px}
+  .brand-mark{width:38px;height:38px;flex-basis:38px;font-size:15px;border-radius:10px}
+  .brand-text h1{font-size:14px}
+  .brand-text p{display:none}
+  .status-pill{display:none}
+  .card-head{padding:11px 14px}
+  .card-body{padding:14px}
+  .hero h2{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="topbar">
+    <div class="brand-mark">SM</div>
+    <div class="brand-text">
+      <h1>SAJEEL <span>MODS</span></h1>
+      <p>Premium Website Creator</p>
+    </div>
+    <div class="topbar-right">
+      <span class="status-pill"><span class="dot"></span>Local · Free</span>
+      <a class="icon-link" href="https://wa.me/923414812972?text=*Hi%20Sajeel%20Mods%20—%20I%20used%20your%20Website%20Creator*" target="_blank" rel="noopener" title="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-badge"><span class="star"></span>PREMIUM TOOL <span class="star"></span></div>
+    <h2>Create. Preview. <span class="accent">Share.</span></h2>
+    <p>Upload your files, preview instantly, and get a shareable link — all in one place.</p>
+  </section>
+
+  <main class="layout">
+
+    <!-- ===== CONFIG ===== -->
+    <section class="card">
+      <div class="card-head">
+        <h3><span class="step">1</span>CONFIGURE</h3>
+        <span class="pill" id="storagePill">0 KB used</span>
+      </div>
+      <div class="card-body">
+
+        <div class="field">
+          <label>Website Name</label>
+          <div class="input-wrap">
+            <span class="prefix">/</span>
+            <input type="text" id="sitename" placeholder="my-awesome-site" maxlength="41" autocomplete="off" spellcheck="false">
+            <span class="status" id="nameStatus"></span>
+          </div>
+          <p class="hint">Letters, numbers, hyphens, underscores · 2–41 characters</p>
+        </div>
+
+        <div class="field">
+          <label>Files</label>
+          <div class="dropzone" id="dropzone">
+            <div class="dz-icon">⬆</div>
+            <div class="dz-title">Drop files here or click to browse</div>
+            <div class="dz-sub">HTML · CSS · JS · JSON · SVG · images · fonts</div>
+            <input type="file" id="fileInput" multiple hidden>
+          </div>
+          <div class="file-list" id="fileList"></div>
+          <div class="file-meta">
+            <span id="fileCount">0 files</span>
+            <span id="fileSize">0 KB</span>
+            <button class="link-btn" id="clearFiles" style="display:none">Clear all</button>
+          </div>
+        </div>
+
+        <button class="btn primary btn-block" id="createBtn">
+          <span>⚡ CREATE WEBSITE</span>
+        </button>
+        <p class="msg" id="message"></p>
+
+      </div>
+    </section>
+
+    <!-- ===== RESULT ===== -->
+    <section class="card">
+      <div class="card-head">
+        <h3><span class="step">2</span>RESULT</h3>
+      </div>
+      <div class="card-body">
+
+        <div class="empty" id="emptyResult">
+          <div class="empty-icon">◈</div>
+          <p>Your generated site will appear here.</p>
+        </div>
+
+        <div id="resultBox" style="display:none">
+          <div class="success-banner">WEBSITE READY</div>
+          <div class="link-row">
+            <input readonly id="siteLink" class="link-input">
+            <button class="btn sm" id="copyLink">Copy</button>
+          </div>
+          <div class="result-actions">
+            <a class="btn primary" id="openSite" target="_blank" rel="noopener">🌐 Open</a>
+            <button class="btn" id="downloadAll">⬇ Download</button>
+          </div>
+          <p class="hint" style="margin-top:14px">
+            ⓘ Saved locally in this browser. Same device/browser par hi link kaam karega.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SITES ===== -->
+    <section class="card sites-card" id="sitesCard" style="display:none">
+      <div class="card-head">
+        <h3><span class="step">3</span>YOUR SITES</h3>
+        <button class="link-btn danger" id="clearAll">Clear all</button>
+      </div>
+      <div class="card-body">
+        <div id="sitesList"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">Crafted by <b>SAJEEL MODS</b></div>
+    <p>&copy; 2025 SAJEEL MODS · All Rights Reserved</p>
+    <a href="https://wa.me/923414812972?text=*Hi%20Sajeel%20Mods%20—%20I%20used%20your%20Website%20Creator*" class="wa-btn" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Contact on WhatsApp
+    </a>
+  </footer>
+
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+'use strict';
+
+const $ = id => document.getElementById(id);
+const SITE_PREFIX = 'sm_site_';
+const MAX_BYTES = 4.5 * 1024 * 1024;
+const TEXT_EXT = ['html','htm','css','js','json','txt','svg','md','xml','webmanifest'];
+
+let files = new Map();
+let currentSite = null;
+
+function fmtBytes(n){
+  if (n < 1024) return n + ' B';
+  if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
+  return (n/1024/1024).toFixed(2) + ' MB';
+}
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fileIcon(name){
+  const n = name.toLowerCase();
+  if (n.endsWith('.html')||n.endsWith('.htm')) return '◈';
+  if (n.endsWith('.css')) return '◐';
+  if (n.endsWith('.js')) return '⚙';
+  if (n.endsWith('.json')) return '{}';
+  if (n.endsWith('.svg')) return '◉';
+  if (/\.(png|jpe?g|gif|webp|bmp|ico)$/.test(n)) return '🖼';
+  if (/\.(woff2?|ttf|otf|eot)$/.test(n)) return 'Aa';
+  return '📄';
+}
+function toast(msg, type){
+  const wrap = $('toasts');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (type||'');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{
+    el.classList.add('out');
+    setTimeout(()=>el.remove(), 230);
+  }, 2600);
+}
+
+function totalSize(){ let t=0; files.forEach(f=>t+=f.size); return t; }
+function updateStoragePill(){
+  let used = 0;
+  for (let i=0;i<localStorage.length;i++){
+    const k = localStorage.key(i);
+    if (k.startsWith(SITE_PREFIX)) used += (localStorage.getItem(k)||'').length;
+  }
+  $('storagePill').textContent = fmtBytes(used) + ' used';
+}
+function getSites(){
+  const out = [];
+  for (let i=0;i<localStorage.length;i++){
+    const k = localStorage.key(i);
+    if (!k.startsWith(SITE_PREFIX)) continue;
+    try { out.push({key:k, ...JSON.parse(localStorage.getItem(k))}); } catch(e){}
+  }
+  out.sort((a,b)=>b.createdAt-a.createdAt);
+  return out;
+}
+
+function validateName(silent){
+  const name = $('sitename').value.trim();
+  const status = $('nameStatus');
+  if (!name){
+    status.textContent=''; status.style.color='';
+    if (!silent) $('message').textContent='';
+    return false;
+  }
+  if (name.length < 2 || name.length > 41){
+    status.textContent='✕'; status.style.color='#ff6b8a';
+    if (!silent) $('message').textContent='Name must be 2–41 characters.';
+    return false;
+  }
+  if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]*$/.test(name)){
+    status.textContent='✕'; status.style.color='#ff6b8a';
+    if (!silent) $('message').textContent='Only letters, numbers, hyphens, underscores. Must start with letter/number.';
+    return false;
+  }
+  if (localStorage.getItem(SITE_PREFIX + name)){
+    status.textContent='!'; status.style.color='#ffb84d';
+    if (!silent) $('message').textContent='This name already exists — will overwrite on create.';
+    return true;
+  }
+  status.textContent='✓'; status.style.color='#22d3a4';
+  if (!silent) $('message').textContent='';
+  return true;
+}
+
+function renderFiles(){
+  const list = $('fileList');
+  list.innerHTML = '';
+  files.forEach((f, name) => {
+    const el = document.createElement('div');
+    el.className = 'file-item';
+    el.innerHTML = `
+      <div class="fi-icon">${fileIcon(name)}</div>
+      <div class="fi-info">
+        <div class="fi-name">${escapeHtml(name)}</div>
+        <div class="fi-size">${fmtBytes(f.size)}</div>
+      </div>
+      <button class="fi-remove" data-name="${escapeHtml(name)}" title="Remove">✕</button>
+    `;
+    el.querySelector('.fi-remove').onclick = () => {
+      files.delete(name);
+      renderFiles();
+    };
+    list.appendChild(el);
+  });
+  $('fileCount').textContent = files.size + (files.size===1?' file':' files');
+  $('fileSize').textContent = fmtBytes(totalSize());
+  $('clearFiles').style.display = files.size ? 'inline' : 'none';
+}
+
+function readFileAsText(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej(r.error);
+    r.readAsText(file);
+  });
+}
+function readFileAsDataURL(file){
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej(r.error);
+    r.readAsDataURL(file);
+  });
+}
+
+async function addFiles(fileList){
+  let added = 0, skipped = 0;
+  for (const f of fileList){
+    if (!f.name || f.name.includes('/') || f.name.includes('\\')){
+      toast('Invalid filename: ' + f.name, 'error'); skipped++; continue;
+    }
+    if (f.size > 2 * 1024 * 1024){
+      toast(f.name + ' is too large (max 2MB)', 'error'); skipped++; continue;
+    }
+    const ext = f.name.toLowerCase().split('.').pop();
+    const isText = TEXT_EXT.includes(ext);
+    try {
+      const content = isText ? await readFileAsText(f) : await readFileAsDataURL(f);
+      files.set(f.name, {content, size: f.size, type: isText ? 'text' : 'binary'});
+      added++;
+    } catch(e){
+      toast('Failed to read ' + f.name, 'error'); skipped++;
+    }
+  }
+  if (added) renderFiles();
+  if (added && !skipped) toast(added + ' file(s) added', 'success');
+}
+
+async function createWebsite(){
+  const name = $('sitename').value.trim();
+  const msg = $('message');
+  msg.textContent = '';
+
+  if (!name){ msg.textContent='Please enter a website name.'; return; }
+  if (!validateName()){ return; }
+  if (files.size === 0){ msg.textContent='Please add at least one file.'; return; }
+
+  const hasHtml = [...files.keys()].some(n => /\.html?$/i.test(n));
+  if (!hasHtml){ msg.textContent='Please include at least one HTML file (e.g. index.html).'; return; }
+
+  if (totalSize() > MAX_BYTES){
+    msg.textContent='Total size exceeds 4.5 MB. Remove some files.';
+    return;
+  }
+
+  const key = SITE_PREFIX + name;
+  if (localStorage.getItem(key)){
+    if (!confirm('Site "' + name + '" already exists. Overwrite it?')) return;
+  }
+
+  const data = {
+    name,
+    createdAt: Date.now(),
+    files: [...files.entries()].map(([n, f]) => ({
+      name: n, content: f.content, type: f.type
+    }))
+  };
+
+  const btn = $('createBtn');
+  btn.disabled = true;
+  btn.querySelector('span').textContent = '⏳ SAVING...';
+
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+    showResult(name);
+    renderSites();
+    toast('Website "' + name + '" created!', 'success');
+  } catch(e){
+    console.error(e);
+    msg.textContent = 'Storage full! Delete old sites from "Your Sites".';
+    toast('Storage full', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = '⚡ CREATE WEBSITE';
+  }
+}
+
+function showResult(name){
+  currentSite = name;
+  const link = new URL('view.html?site=' + encodeURIComponent(name), location.href).href;
+  $('siteLink').value = link;
+  $('openSite').href = link;
+  $('resultBox').style.display = 'block';
+  $('emptyResult').style.display = 'none';
+}
+
+function renderSites(){
+  const sites = getSites();
+  $('sitesCard').style.display = sites.length ? 'block' : 'none';
+  const box = $('sitesList');
+  box.innerHTML = sites.map(s => `
+    <div class="site-item">
+      <div class="si-dot"></div>
+      <div class="si-main">
+        <div class="si-name">${escapeHtml(s.name)}</div>
+        <div class="si-meta">${s.files.length} file${s.files.length===1?'':'s'} · ${new Date(s.createdAt).toLocaleDateString()}</div>
+      </div>
+      <div class="si-actions">
+        <a class="icon-btn" href="view.html?site=${encodeURIComponent(s.name)}" target="_blank" rel="noopener" title="Open">↗</a>
+        <button class="icon-btn" data-dl="${escapeHtml(s.name)}" title="Download">⬇</button>
+        <button class="icon-btn danger" data-del="${escapeHtml(s.name)}" title="Delete">✕</button>
+      </div>
+    </div>
+  `).join('');
+
+  box.querySelectorAll('[data-del]').forEach(b => b.onclick = () => deleteSite(b.dataset.del));
+  box.querySelectorAll('[data-dl]').forEach(b => b.onclick = () => downloadSite(b.dataset.dl));
+  updateStoragePill();
+}
+
+function deleteSite(name){
+  if (!confirm('Delete "' + name + '"?')) return;
+  localStorage.removeItem(SITE_PREFIX + name);
+  if (currentSite === name){
+    $('resultBox').style.display = 'none';
+    $('emptyResult').style.display = 'block';
+    currentSite = null;
+  }
+  renderSites();
+  toast('Site deleted');
+}
+
+function downloadSite(name){
+  const raw = localStorage.getItem(SITE_PREFIX + name);
+  if (!raw){ toast('Site not found', 'error'); return; }
+  let data;
+  try { data = JSON.parse(raw); } catch(e){ toast('Corrupt data', 'error'); return; }
+
+  data.files.forEach((f, i) => {
+    setTimeout(() => {
+      let blob;
+      if (f.type === 'text'){
+        const mime =
+          f.name.endsWith('.html')||f.name.endsWith('.htm') ? 'text/html' :
+          f.name.endsWith('.css') ? 'text/css' :
+          f.name.endsWith('.js') ? 'application/javascript' :
+          f.name.endsWith('.json') ? 'application/json' :
+          f.name.endsWith('.svg') ? 'image/svg+xml' :
+          'text/plain';
+        blob = new Blob([f.content], {type: mime});
+      } else {
+        const [head, b64] = String(f.content).split(',');
+        const mime = (head.match(/:(.*?);/)||[])[1] || 'application/octet-stream';
+        const bin = atob(b64);
+        const arr = new Uint8Array(bin.length);
+        for (let j=0;j<bin.length;j++) arr[j]=bin.charCodeAt(j);
+        blob = new Blob([arr], {type: mime});
+      }
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = f.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
+    }, i * 220);
+  });
+  toast('Downloading ' + data.files.length + ' file(s)...');
+}
+
+$('sitename').addEventListener('input', () => validateName(true));
+$('createBtn').addEventListener('click', createWebsite);
+$('sitename').addEventListener('keydown', e => { if (e.key==='Enter') createWebsite(); });
+
+$('fileInput').addEventListener('change', e => {
+  addFiles(e.target.files);
+  e.target.value = '';
+});
+
+$('clearFiles').addEventListener('click', () => {
+  if (!files.size) return;
+  if (!confirm('Remove all files?')) return;
+  files.clear();
+  renderFiles();
+});
+
+const dz = $('dropzone');
+dz.addEventListener('click', () => $('fileInput').click());
+['dragenter','dragover'].forEach(ev => {
+  dz.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dz.classList.add('drag'); });
+});
+['dragleave','drop'].forEach(ev => {
+  dz.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('drag'); });
+});
+dz.addEventListener('drop', e => {
+  if (e.dataTransfer.files && e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+});
+
+$('copyLink').addEventListener('click', async () => {
+  const val = $('siteLink').value;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(val);
+    } else {
+      $('siteLink').select();
+      document.execCommand('copy');
+    }
+    $('copyLink').textContent = '✓';
+    toast('Link copied', 'success');
+    setTimeout(()=>$('copyLink').textContent='Copy', 1500);
+  } catch(e){ toast('Copy failed', 'error'); }
+});
+
+$('downloadAll').addEventListener('click', () => {
+  if (currentSite) downloadSite(currentSite);
+});
+
+$('clearAll').addEventListener('click', () => {
+  const sites = getSites();
+  if (!sites.length) return;
+  if (!confirm('Delete ALL ' + sites.length + ' site(s)? This cannot be undone.')) return;
+  sites.forEach(s => localStorage.removeItem(s.key));
+  if (currentSite){
+    $('resultBox').style.display='none';
+    $('emptyResult').style.display='block';
+    currentSite = null;
+  }
+  renderSites();
+  toast('All sites deleted');
+});
+
+renderFiles();
+renderSites();
+validateName(true);
+})();
+</script>
+</body>
+</html>
