@@ -1,1 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viewer • Sajeel Mods</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#06060c;font-family:'Inter',system-ui,-apple-system,sans-serif}
+#websiteFrame{width:100vw;height:100vh;border:none;background:#fff;display:block}
+#websiteFrame.hidden{display:none}
+.error{
+  position:fixed;inset:0;display:none;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:24px;color:#f4f4fa;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 0%, rgba(255,45,122,.16), transparent 65%),
+    radial-gradient(ellipse 50% 45% at 85% 0%, rgba(168,85,247,.13), transparent 65%),
+    radial-gradient(ellipse 55% 40% at 50% 110%, rgba(0,217,255,.08), transparent 70%),
+    #06060c;
+}
+.error::before{
+  content:'';position:fixed;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000 20%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000 20%,transparent 80%);
+}
+.error.show{display:flex}
+.error-box{
+  position:relative;z-index:1;
+  max-width:420px;padding:30px 26px;border-radius:16px;
+  background:rgba(17,17,28,.7);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 20px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.error-mark{
+  width:44px;height:44px;margin:0 auto 14px;border-radius:11px;
+  background:linear-gradient(135deg,#ff2d7a,#a855f7,#00d9ff);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:16px;color:#fff;font-family:'Space Grotesk',sans-serif;
+  box-shadow:0 4px 18px rgba(255,45,122,.4);
+}
+.error-icon{
+  font-size:34px;color:#ff8fb5;margin-bottom:12px;
+  text-shadow:0 0 24px rgba(255,45,122,.6);
+}
+.error h1{
+  font-size:18px;font-weight:700;letter-spacing:.3px;margin-bottom:8px;
+  font-family:'Space Grotesk',sans-serif;
+}
+.error p{color:#8a8aa2;font-size:13px;line-height:1.65;margin-bottom:20px}
+.error a{
+  display:inline-flex;align-items:center;gap:7px;padding:10px 20px;
+  border-radius:9px;border:1px solid rgba(255,45,122,.35);
+  background:rgba(255,45,122,.08);color:#ff8fb5;text-decoration:none;
+  font-size:12px;font-weight:700;letter-spacing:.4px;transition:all .2s;
+  font-family:'Space Grotesk',sans-serif;
+}
+.error a:hover{background:#ff2d7a;color:#fff;box-shadow:0 0 22px rgba(255,45,122,.5)}
+.spinner{
+  width:34px;height:34px;border-radius:50%;
+  border:3px solid rgba(255,45,122,.15);border-top-color:#ff2d7a;
+  animation:spin .8s linear infinite;margin:0 auto 14px;
+  box-shadow:0 0 20px rgba(255,45,122,.15);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
 
+<iframe id="websiteFrame" src="about:blank" class="hidden" title="Website preview"></iframe>
+
+<div class="error" id="errorScreen">
+  <div class="error-box">
+    <div class="error-mark" id="errorMark">SM</div>
+    <div class="error-icon" id="errorIcon">◈</div>
+    <h1 id="errorTitle">Loading...</h1>
+    <p id="errorMsg">Please wait.</p>
+    <a href="index.html" id="homeLink" style="display:none">← Back to Creator</a>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+const SITE_PREFIX = 'sm_site_';
+const blobUrls = [];
+
+function showError(icon, title, msg){
+  document.getElementById('errorIcon').textContent = icon;
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorMsg').textContent = msg;
+  document.getElementById('errorScreen').classList.add('show');
+  document.getElementById('websiteFrame').classList.add('hidden');
+  document.getElementById('homeLink').style.display = 'inline-flex';
+}
+function showLoading(){
+  document.getElementById('errorIcon').innerHTML = '<div class="spinner"></div>';
+  document.getElementById('errorTitle').textContent = 'Loading website...';
+  document.getElementById('errorMsg').textContent = 'Preparing files, please wait.';
+  document.getElementById('errorScreen').classList.add('show');
+  document.getElementById('homeLink').style.display = 'none';
+}
+function hideError(){
+  document.getElementById('errorScreen').classList.remove('show');
+  document.getElementById('websiteFrame').classList.remove('hidden');
+}
+function getMime(name){
+  const n = name.toLowerCase();
+  if (n.endsWith('.css')) return 'text/css';
+  if (n.endsWith('.js')||n.endsWith('.mjs')) return 'application/javascript';
+  if (n.endsWith('.json')||n.endsWith('.webmanifest')) return 'application/json';
+  if (n.endsWith('.svg')) return 'image/svg+xml';
+  if (n.endsWith('.html')||n.endsWith('.htm')) return 'text/html';
+  if (n.endsWith('.png')) return 'image/png';
+  if (n.endsWith('.jpg')||n.endsWith('.jpeg')) return 'image/jpeg';
+  if (n.endsWith('.gif')) return 'image/gif';
+  if (n.endsWith('.webp')) return 'image/webp';
+  if (n.endsWith('.ico')) return 'image/x-icon';
+  if (n.endsWith('.woff2')) return 'font/woff2';
+  if (n.endsWith('.woff')) return 'font/woff';
+  if (n.endsWith('.ttf')) return 'font/ttf';
+  return 'application/octet-stream';
+}
+function dataURLtoBlob(dataUrl){
+  const [head, b64] = String(dataUrl).split(',');
+  const mime = (head.match(/:(.*?);/) || [])[1] || 'application/octet-stream';
+  const bin = atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], {type: mime});
+}
+function makeBlob(name, content, isBinary){
+  let blob;
+  if (isBinary) blob = dataURLtoBlob(content);
+  else blob = new Blob([content], {type: getMime(name)});
+  const url = URL.createObjectURL(blob);
+  blobUrls.push(url);
+  return url;
+}
+function findBlob(val, map){
+  if (!val) return null;
+  if (/^(https?:|data:|blob:|mailto:|tel:|javascript:|#|\/\/)/i.test(val)) return null;
+  let clean = val.trim().replace(/^\.?\//, '').split(/[?#]/)[0];
+  if (map[clean]) return map[clean];
+  const lower = clean.toLowerCase();
+  for (const k in map){
+    if (k.toLowerCase() === lower) return map[k];
+  }
+  const base = clean.split('/').pop();
+  for (const k in map){
+    if (k.split('/').pop().toLowerCase() === base.toLowerCase()) return map[k];
+  }
+  return null;
+}
+function rewriteCSS(css, map){
+  return css.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/gi, (m, q, val) => {
+    const b = findBlob(val, map);
+    return b ? 'url("' + b + '")' : m;
+  });
+}
+function rewriteHTML(html, map){
+  html = html.replace(/<style([^>]*)>([\s\S]*?)<\/style>/gi, (m, attrs, css) => {
+    return '<style' + attrs + '>' + rewriteCSS(css, map) + '</style>';
+  });
+  html = html.replace(/style\s*=\s*(['"])([\s\S]*?)\1/gi, (m, q, css) => {
+    return 'style=' + q + rewriteCSS(css, map) + q;
+  });
+  html = html.replace(/\b(src|href|poster|data-src)\s*=\s*(['"])([^'"]+)\2/gi, (m, attr, q, val) => {
+    const b = findBlob(val, map);
+    return b ? attr + '=' + q + b + q : m;
+  });
+  html = html.replace(/\bxlink:href\s*=\s*(['"])([^'"]+)\1/gi, (m, q, val) => {
+    const b = findBlob(val, map);
+    return b ? 'xlink:href=' + q + b + q : m;
+  });
+  return html;
+}
+
+function loadSite(siteName){
+  let raw;
+  try { raw = localStorage.getItem(SITE_PREFIX + siteName); } catch(e){}
+  if (!raw){
+    showError('✕', 'Website Not Found', 'Is browser/device par "' + siteName + '" naam ki koi site nahi mili. Creator se dobara banao ya sahi device use karo.');
+    return;
+  }
+  let data;
+  try { data = JSON.parse(raw); } catch(e){
+    showError('⚠', 'Data Corrupt', 'Site data read nahi ho saka.');
+    return;
+  }
+  if (!data.files || !data.files.length){
+    showError('⚠', 'No Files', 'Is site mein koi file nahi hai.');
+    return;
+  }
+
+  showLoading();
+
+  try {
+    const map = {};
+
+    data.files.forEach(f => {
+      if (f.type === 'binary'){
+        map[f.name] = makeBlob(f.name, f.content, true);
+      }
+    });
+
+    data.files.forEach(f => {
+      if (f.type === 'text' && /\.css$/i.test(f.name)){
+        const rewritten = rewriteCSS(f.content, map);
+        map[f.name] = makeBlob(f.name, rewritten, false);
+      }
+    });
+
+    data.files.forEach(f => {
+      if (f.type === 'text' && !/\.css$/i.test(f.name) && !/\.html?$/i.test(f.name)){
+        map[f.name] = makeBlob(f.name, f.content, false);
+      }
+    });
+
+    const htmlFiles = data.files.filter(f => f.type === 'text' && /\.html?$/i.test(f.name));
+    if (!htmlFiles.length){
+      showError('⚠', 'No HTML File', 'Is site mein koi HTML file nahi mili.');
+      return;
+    }
+    const main = htmlFiles.find(f => f.name.toLowerCase() === 'index.html') || htmlFiles[0];
+
+    const finalHTML = rewriteHTML(main.content, map);
+    const mainUrl = makeBlob(main.name, finalHTML, false);
+    map[main.name] = mainUrl;
+
+    const frame = document.getElementById('websiteFrame');
+    frame.onload = () => hideError();
+    frame.onerror = () => showError('⚠', 'Load Failed', 'Website render nahi ho saki.');
+    frame.src = mainUrl;
+
+    setTimeout(() => {
+      if (document.getElementById('errorScreen').classList.contains('show')) hideError();
+    }, 3000);
+
+  } catch(e){
+    console.error(e);
+    showError('⚠', 'Error', 'Website load karte waqt error aaya: ' + e.message);
+  }
+}
+
+window.addEventListener('beforeunload', () => {
+  blobUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
+});
+
+const params = new URLSearchParams(location.search);
+const siteName = params.get('site');
+if (!siteName){
+  showError('◈', 'No Site Specified', 'URL mein ?site=NAAM add karo. Jaise: view.html?site=my-site');
+} else {
+  loadSite(siteName);
+}
+})();
+</script>
+</body>
+</html>
