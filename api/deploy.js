@@ -1,4 +1,4 @@
-// api/deploy.js — Sajeel Hosting Deploy Function (with stable alias)
+// api/deploy.js — Final working version with clean URL
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -19,9 +19,7 @@ module.exports = async function handler(req, res) {
 
   const VERCEL_TOKEN = process.env.VERCEL_TOKEN;
   if (!VERCEL_TOKEN) {
-    return res.status(500).json({
-      error: 'Server misconfigured: VERCEL_TOKEN missing.'
-    });
+    return res.status(500).json({ error: 'Server misconfigured: VERCEL_TOKEN missing.' });
   }
 
   const slug = String(name)
@@ -40,7 +38,7 @@ module.exports = async function handler(req, res) {
   };
 
   try {
-    // Step 1: Create deployment
+    // ===== STEP 1: Create deployment =====
     const deployRes = await fetch('https://api.vercel.com/v13/deployments', {
       method: 'POST',
       headers,
@@ -64,48 +62,104 @@ module.exports = async function handler(req, res) {
     const deployData = await deployRes.json();
 
     if (!deployRes.ok) {
-      console.error('Vercel deploy error:', deployData);
+      console.error('Deploy failed:', deployData);
       return res.status(deployRes.status).json({
         error: (deployData.error && deployData.error.message) || 'Deployment failed'
       });
     }
 
-    // Step 2: Try to assign a stable alias
-    // Clean URL: portfolio-<slug>.vercel.app
-    const aliasTarget = projectName + '.vercel.app';
-    let finalUrl = 'https://' + (
-      (deployData.alias && deployData.alias[0]) || deployData.url
-    );
+    // ===== STEP 2: Find the cleanest URL =====
+    let cleanUrl = null;
+    let teamId = deployData.teamId || null;
 
-    // Attempt alias assignment (best-effort)
-    try {
-      const aliasRes = await fetch(
-        'https://api.vercel.com/v2/deployments/' + deployData.id + '/aliases',
-        {
+    // Strategy A: Vercel's alias array (usually contains clean domain)
+    if (deployData.alias && Array.isArray(deployData.alias) && deployData.alias.length > 0) {
+      // Pick shortest vercel.app alias (cleanest)
+      const candidates = deployData.alias
+        .filter(a => typeof a === 'string' && a.endsWith('.vercel.app'))
+        .sort((a, b) => a.length - b.length);
+      if (candidates.length > 0) {
+        cleanUrl = 'https://' + candidates[0];
+      }
+    }
+
+    // Strategy B: Query project to get its assigned production domain
+    if (!cleanUrl) {
+      try {
+        const qs = teamId ? ('?teamId=' + teamId) : '';
+        const projRes = await fetch(
+          'https://api.vercel.com/v9/projects/' + projectName + qs,
+          { headers: { 'Authorization': 'Bearer ' + VERCEL_TOKEN } }
+        );
+        if (projRes.ok) {
+          const projData = await projRes.json();
+
+          // Method 1: targets.production.alias
+          const prodAlias = projData.targets &&
+            projData.targets.production &&
+            projData.targets.production.alias;
+          if (Array.isArray(prodAlias) && prodAlias.length > 0) {
+            cleanUrl = 'https://' + prodAlias[0];
+          }
+
+          // Method 2: domains array
+          if (!cleanUrl && Array.isArray(projData.domains)) {
+            const vercelDomain = projData.domains
+              .filter(d => d.endsWith('.vercel.app'))
+              .sort((a, b) => a.length - b.length)[0];
+            if (vercelDomain) cleanUrl = 'https://' + vercelDomain;
+          }
+
+          // Method 3: name-based construction (project name + team slug)
+          if (!cleanUrl) {
+            // Check if deploy URL contains team slug we can extract
+            // Deployment URL: portfolio-ali-hassan-mwd25vlf-sajeel-razas-projects.vercel.app
+            const deployUrl = deployData.url || '';
+            // The hash part is typically 8-10 alphanumeric chars between project and team
+            const hashMatch = deployUrl.match(
+              new RegExp('^' + escapeRegex(projectName) + '-([a-z0-9]{8,12})-(.+)\\.vercel\\.app$')
+            );
+            if (hashMatch) {
+              const teamSlug = hashMatch[2];
+              // Construct clean team-scoped URL
+              cleanUrl = 'https://' + projectName + '-' + teamSlug + '.vercel.app';
+            }
+          }
+        }
+      } catch (projErr) {
+        console.warn('Project lookup failed:', projErr.message);
+      }
+    }
+
+    // ===== STEP 3: Try to assign alias explicitly =====
+    if (!cleanUrl) {
+      const cleanAlias = projectName + '.vercel.app';
+      try {
+        const aliasUrl = 'https://api.vercel.com/v2/deployments/' +
+          deployData.id + '/aliases' +
+          (teamId ? '?teamId=' + teamId : '');
+        const aliasRes = await fetch(aliasUrl, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ alias: aliasTarget })
+          body: JSON.stringify({ alias: cleanAlias })
+        });
+        if (aliasRes.ok) {
+          cleanUrl = 'https://' + cleanAlias;
         }
-      );
-
-      if (aliasRes.ok) {
-        // Alias assigned successfully — use clean URL
-        finalUrl = 'https://' + aliasTarget;
-      } else {
-        const aliasErr = await aliasRes.json();
-        console.warn('Alias assignment skipped:', aliasErr.error?.message || aliasErr);
-        // Fallback: use deployment URL (still works, just not clean)
+      } catch (aliasErr) {
+        console.warn('Alias attempt failed:', aliasErr.message);
       }
-    } catch (aliasErr) {
-      console.warn('Alias attempt failed:', aliasErr.message);
     }
+
+    // ===== STEP 4: Fallback =====
+    const deploymentUrl = 'https://' + deployData.url;
+    const finalUrl = cleanUrl || deploymentUrl;
 
     return res.status(200).json({
       url: finalUrl,
-      deploymentUrl: 'https://' + deployData.url,
-      id: deployData.id || null,
+      deploymentUrl: deploymentUrl,
       project: projectName,
-      aliased: finalUrl.includes(aliasTarget)
+      hasCleanAlias: !!cleanUrl
     });
 
   } catch (err) {
@@ -113,3 +167,7 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: err.message || 'Deploy failed' });
   }
 };
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
