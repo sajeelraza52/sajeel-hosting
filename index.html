@@ -2,946 +2,1190 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Sajeel Mods — Premium Portfolio Builder</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sajeel Mods — Free Web Hosting</title>
+<meta name="description" content="Sajeel Mods Free Hosting — Upload HTML, CSS, JS files and get a live link instantly.">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --brand-pink:#ff2d7a;
-  --brand-purple:#a855f7;
-  --brand-cyan:#00d9ff;
-  --brand-grad:linear-gradient(135deg,#ff2d7a 0%,#a855f7 50%,#00d9ff 100%);
-  --brand-grad-soft:linear-gradient(135deg,rgba(255,45,122,.14),rgba(168,85,247,.10),rgba(0,217,255,.08));
-  --brand-glow:0 0 32px rgba(255,45,122,.32);
-  --bg:#06060c;
-  --surface:rgba(17,17,28,.68);
-  --border:rgba(255,255,255,.07);
-  --border-2:rgba(255,255,255,.13);
-  --border-brand:rgba(255,45,122,.28);
-  --text:#f4f4fa;
-  --dim:#8a8aa2;
-  --dim-2:#5a5a72;
-  --success:#22d3a4;
-  --danger:#ff4d6d;
-  --radius:16px;
-  --radius-sm:10px;
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',system-ui,-apple-system,Roboto,Arial,sans-serif;
-  background:var(--bg);color:var(--text);min-height:100vh;
-  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;
-  background-image:
-    radial-gradient(ellipse 55% 45% at 15% -10%, rgba(255,45,122,.16), transparent 65%),
-    radial-gradient(ellipse 50% 45% at 85% 0%, rgba(168,85,247,.13), transparent 65%),
-    radial-gradient(ellipse 55% 40% at 50% 110%, rgba(0,217,255,.08), transparent 70%);
-  background-attachment:fixed;overflow-x:hidden;
-}
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
-  background-image:
-    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
-  background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 80%);
-  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 20%,transparent 80%);
-}
-button,input,a{font-family:inherit}
-.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:20px 16px 60px}
+  :root {
+    --gold: #e8b64c;
+    --gold-dark: #c9962e;
+    --gold-soft: rgba(232, 182, 76, .12);
+    --red: #e63946;
+    --red-dark: #b91f2c;
+    --bg: #0b0b0e;
+    --bg-2: #14141a;
+    --bg-3: #1d1d24;
+    --border: #2a2a33;
+    --border-2: #3a3a44;
+    --text: #f2ede4;
+    --muted: #a9a294;
+    --cyan: #00d9ff;
+    --green: #7de6c5;
+    --green-bg: rgba(34, 211, 164, .10);
+    --green-border: rgba(34, 211, 164, .35);
+    --red-bg: rgba(230, 57, 70, .10);
+    --red-border: rgba(230, 57, 70, .40);
+    --shadow: 0 10px 30px rgba(0,0,0,.5);
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse at top, #1a0d0d 0%, #0b0b0e 55%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.55;
+    padding: 0 0 90px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 14px; }
 
-/* Topbar */
-.topbar{
-  display:flex;align-items:center;gap:12px;padding:14px 18px;
-  background:var(--surface);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
-  border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04);
-  margin-bottom:22px;position:sticky;top:12px;z-index:60;
-}
-.brand-mark{
-  width:42px;height:42px;flex:0 0 42px;border-radius:11px;
-  background:var(--brand-grad);display:flex;align-items:center;justify-content:center;
-  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff;
-  letter-spacing:.5px;
-  box-shadow:0 4px 18px rgba(255,45,122,.4),0 0 0 1px rgba(255,255,255,.1) inset;
-}
-.brand-text{min-width:0;line-height:1.2}
-.brand-text h1{
-  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
-  letter-spacing:1px;color:var(--text);
-}
-.brand-text h1 span{
-  background:var(--brand-grad);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
-.brand-text p{font-size:11px;color:var(--dim);margin-top:2px;letter-spacing:.3px}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.status-pill{
-  display:flex;align-items:center;gap:6px;
-  font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:20px;
-  background:rgba(34,211,164,.1);color:#22d3a4;
-  border:1px solid rgba(34,211,164,.22);letter-spacing:.3px;
-}
-.status-pill .dot{
-  width:6px;height:6px;border-radius:50%;background:currentColor;
-  animation:pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 8px currentColor}50%{opacity:.35;box-shadow:0 0 4px currentColor}}
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 32px 14px 26px;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(90deg, transparent, var(--gold), transparent) 1;
+  }
+  .crown {
+    font-size: 44px; line-height: 1;
+    filter: drop-shadow(0 0 12px rgba(232,182,76,.55));
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  h1 {
+    color: var(--gold); font-size: 26px; letter-spacing: 1.5px;
+    margin-top: 8px; font-weight: 800;
+    text-shadow: 0 0 24px rgba(232,182,76,.25);
+  }
+  h1 span { color: var(--red); }
+  .sub { color: var(--muted); font-size: 14.5px; margin-top: 8px; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .badges { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .badge {
+    display: inline-block; padding: 4px 12px;
+    border: 1px solid var(--gold); border-radius: 20px;
+    color: var(--gold); font-size: 11px; letter-spacing: 1px; font-weight: 600;
+    background: rgba(232,182,76,.04);
+  }
+  .badge.green { border-color: var(--green-border); color: var(--green); }
+  .contact-top {
+    margin-top: 16px;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px;
+    background: rgba(37,211,102,.08);
+    border: 1px solid rgba(37,211,102,.35);
+    border-radius: 20px;
+    color: #4ade80; font-size: 12.5px; font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .contact-top:hover { background: rgba(37,211,102,.15); transform: translateY(-1px); }
 
-/* Hero */
-.hero{text-align:center;margin-bottom:26px;padding:6px 0}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:5px 12px;border-radius:20px;
-  background:var(--brand-grad-soft);
-  border:1px solid var(--border-brand);
-  color:#ff8fb5;font-size:10.5px;font-weight:700;
-  letter-spacing:2px;margin-bottom:16px;
-  font-family:'Space Grotesk',sans-serif;
-}
-.hero h2{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:36px;font-weight:700;letter-spacing:-.8px;
-  line-height:1.14;
-}
-.hero h2 .accent{
-  background:var(--brand-grad);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
-.hero p{
-  color:var(--dim);font-size:14px;margin-top:10px;
-  max-width:520px;margin-left:auto;margin-right:auto;
-}
+  /* STEPS BAR */
+  .steps-bar {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; margin-top: 22px;
+    padding: 0 8px;
+  }
+  .step-ind {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11.5px; color: var(--muted); font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+    transition: all .25s;
+    white-space: nowrap;
+  }
+  .step-ind span {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--bg-3); border: 1px solid var(--border-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    transition: all .25s;
+  }
+  .step-ind.active { color: var(--gold); }
+  .step-ind.active span {
+    background: var(--gold); border-color: var(--gold); color: #111;
+    box-shadow: 0 0 12px rgba(232,182,76,.5);
+  }
+  .step-ind.done span { background: var(--green); border-color: var(--green); color: #111; }
+  .step-ind.done { color: var(--green); }
+  .step-line { flex: 1; max-width: 30px; height: 1px; background: var(--border-2); }
 
-/* Layout */
-.layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
-.sites-card{grid-column:1/-1}
-@media(max-width:960px){.layout{grid-template-columns:1fr}}
+  /* SECTIONS */
+  section {
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px; margin-top: 18px;
+    position: relative;
+    transition: border-color .3s, box-shadow .3s;
+  }
+  section.done { border-color: rgba(232,182,76,.4); }
+  h2 { color: var(--gold); font-size: 18px; margin-bottom: 4px; font-weight: 700; }
+  .sec-sub { color: var(--muted); font-size: 13.5px; margin-bottom: 14px; }
 
-/* Card */
-.card{
-  background:var(--surface);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:0 8px 32px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.035);
-  overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease;
-  position:relative;
-}
-.card:hover{border-color:var(--border-2)}
-.card-head{
-  padding:13px 18px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  background:rgba(255,255,255,.015);
-}
-.card-head h3{
-  font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;
-  letter-spacing:1.2px;color:var(--text);
-  display:flex;align-items:center;gap:8px;
-}
-.card-head h3 .step{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:18px;height:18px;border-radius:5px;
-  background:var(--brand-grad-soft);color:#ff8fb5;
-  font-size:9.5px;font-weight:800;letter-spacing:0;
-  border:1px solid var(--border-brand);
-}
-.card-head .pill{
-  font-size:10.5px;padding:3px 9px;border-radius:20px;
-  background:rgba(255,255,255,.04);color:var(--dim);
-  border:1px solid var(--border);font-weight:600;
-}
-.card-body{padding:16px 18px}
+  /* FORM */
+  label { display: block; color: var(--gold); font-size: 13.5px; margin: 12px 0 6px; font-weight: 600; }
+  input[type="text"] {
+    width: 100%; padding: 12px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border-2); background: #0f0f13; color: var(--text);
+    font-size: 15px; font-family: inherit;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  input[type="text"]:focus {
+    outline: none; border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(232,182,76,.12);
+  }
+  .check-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 10px; cursor: pointer;
+    font-size: 12.5px; color: var(--muted);
+  }
+  .check-row input[type="checkbox"] {
+    width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer;
+  }
+  .hint { font-size: 12.5px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .msg { margin-top: 10px; font-size: 13.5px; color: #ff7b7b; min-height: 18px; }
+  .msg.ok { color: var(--green); }
 
-/* Fields */
-.field{margin-bottom:16px}
-.field:last-child{margin-bottom:0}
-.field > label{
-  display:block;font-size:10.5px;font-weight:700;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--dim);margin-bottom:7px;
-}
-.input-wrap{
-  display:flex;align-items:center;
-  border:1px solid var(--border-2);border-radius:var(--radius-sm);
-  background:rgba(0,0,0,.35);padding:0 12px;
-  transition:border-color .2s,box-shadow .2s;
-}
-.input-wrap:focus-within{
-  border-color:var(--brand-pink);
-  box-shadow:0 0 0 3px rgba(255,45,122,.12);
-}
-.input-wrap input{
-  flex:1;background:transparent;border:none;outline:none;
-  padding:11px 8px;color:var(--text);font-size:14px;
-}
-.input-wrap input::placeholder{color:var(--dim-2)}
-.hint{font-size:11.5px;color:var(--dim-2);margin-top:6px;line-height:1.5}
-.msg{font-size:12px;color:var(--danger);min-height:16px;margin-top:8px;font-weight:500}
+  /* SLUG PREVIEW */
+  .slug-pill {
+    margin-top: 12px; padding: 12px 14px; border-radius: var(--radius-sm);
+    background: #0f0f13; border: 1px solid var(--border);
+    font-size: 13px; color: var(--muted); word-break: break-all;
+    line-height: 1.5;
+  }
+  .slug-pill b { color: var(--cyan); font-family: ui-monospace, "SF Mono", monospace; font-weight: 600; }
+  .slug-pill .note { display: block; margin-top: 4px; color: var(--muted); font-size: 11.5px; opacity: .85; }
 
-/* Dropzone */
-.dropzone{
-  border:1.5px dashed var(--border-2);border-radius:12px;
-  padding:26px 16px;text-align:center;cursor:pointer;
-  background:rgba(0,0,0,.28);transition:all .22s;
-}
-.dropzone:hover{border-color:var(--border-brand);background:rgba(255,45,122,.035)}
-.dropzone.drag{
-  border-color:var(--brand-pink);background:rgba(255,45,122,.08);
-  box-shadow:inset 0 0 40px rgba(255,45,122,.12);
-}
-.dz-icon{
-  width:42px;height:42px;border-radius:11px;margin:0 auto 10px;
-  background:var(--brand-grad-soft);border:1px solid var(--border-brand);
-  display:flex;align-items:center;justify-content:center;
-  color:#ff8fb5;font-size:18px;
-}
-.dz-title{font-size:13px;font-weight:600;color:var(--text)}
-.dz-sub{font-size:11px;color:var(--dim-2);margin-top:4px}
+  /* DROPZONE */
+  .dropzone {
+    border: 1.5px dashed var(--border-2); border-radius: 12px;
+    padding: 30px 16px; text-align: center; cursor: pointer;
+    background: rgba(0,0,0,.28); transition: all .22s;
+    user-select: none;
+  }
+  .dropzone:hover, .dropzone:focus-visible {
+    border-color: var(--gold); background: rgba(232,182,76,.05);
+    outline: none;
+  }
+  .dropzone.drag {
+    border-color: var(--gold); background: rgba(232,182,76,.10);
+    transform: scale(1.01);
+  }
+  .dz-icon { font-size: 34px; line-height: 1; margin-bottom: 10px; transition: transform .2s; }
+  .dropzone:hover .dz-icon { transform: translateY(-3px); }
+  .dz-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .dz-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
 
-/* File List */
-.file-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-.file-item{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border-radius:9px;
-  background:rgba(255,255,255,.025);border:1px solid var(--border);
-}
-.fi-icon{
-  width:30px;height:30px;border-radius:7px;flex:0 0 30px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:12.5px;background:var(--brand-grad-soft);
-  border:1px solid var(--border-brand);color:#ff8fb5;
-}
-.fi-info{flex:1;min-width:0}
-.fi-name{font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fi-size{font-size:10.5px;color:var(--dim-2);margin-top:1px}
-.fi-remove{
-  width:24px;height:24px;border-radius:6px;border:1px solid var(--border);
-  background:rgba(255,77,109,.08);color:#ff8095;cursor:pointer;
-  font-size:10px;display:flex;align-items:center;justify-content:center;
-  transition:all .15s;flex:0 0 24px;font-weight:700;
-}
-.fi-remove:hover{background:rgba(255,77,109,.2)}
+  /* FILE LIST */
+  .file-list {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-top: 12px; max-height: 280px; overflow-y: auto;
+    padding-right: 2px;
+  }
+  .file-list::-webkit-scrollbar { width: 6px; }
+  .file-list::-webkit-scrollbar-track { background: transparent; }
+  .file-list::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+  .file-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: 9px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    animation: slideIn .2s ease-out;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fi-icon {
+    width: 32px; height: 32px; border-radius: 8px; flex: 0 0 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; background: #2a2113;
+    border: 1px solid var(--gold); color: var(--gold);
+    font-weight: 700;
+  }
+  .fi-info { flex: 1; min-width: 0; }
+  .fi-name { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fi-size { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+  .fi-remove {
+    width: 26px; height: 26px; border-radius: 7px; flex: 0 0 26px;
+    border: 1px solid var(--border); background: var(--red-bg);
+    color: #ff8095; cursor: pointer; font-size: 11px; font-weight: 700;
+    transition: all .2s;
+  }
+  .fi-remove:hover { background: rgba(230,57,70,.25); border-color: var(--red-border); }
+  .file-meta {
+    display: flex; gap: 14px; align-items: center;
+    font-size: 12.5px; color: var(--muted); margin-top: 10px;
+    padding-top: 10px; border-top: 1px solid var(--border);
+  }
+  .file-meta .spacer { flex: 1; }
+  .file-meta button {
+    background: none; border: none; color: #ff8095; cursor: pointer;
+    font-size: 12.5px; padding: 0; text-decoration: underline;
+  }
+  .file-meta button:hover { color: #ff9caf; }
 
-/* Buttons */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  padding:10px 16px;border-radius:var(--radius-sm);
-  border:1px solid var(--border-2);
-  background:rgba(255,255,255,.04);color:var(--text);
-  font-size:12.5px;font-weight:600;letter-spacing:.3px;
-  cursor:pointer;transition:all .22s ease;text-decoration:none;
-}
-.btn:hover{background:rgba(255,255,255,.08)}
-.btn.primary{
-  background:var(--brand-grad);border:none;color:#fff;
-  box-shadow:0 4px 20px rgba(255,45,122,.35);
-}
-.btn.primary:hover{box-shadow:0 8px 32px rgba(255,45,122,.5);transform:translateY(-1px)}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
-.btn-block{width:100%;padding:13px;font-size:13px;letter-spacing:.5px}
-.btn.sm{padding:6px 11px;font-size:11px;border-radius:7px}
-.btn.danger{color:#ff8095;border-color:rgba(255,77,109,.28);background:rgba(255,77,109,.06)}
-.btn.danger:hover{background:rgba(255,77,109,.15)}
+  /* STATUS LINES */
+  .status-line {
+    margin-top: 10px; padding: 10px 12px; border-radius: var(--radius-sm);
+    font-size: 13px; line-height: 1.5;
+  }
+  .status-line.ok { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+  .status-line.bad { background: var(--red-bg); border: 1px solid var(--red-border); color: #ff9caf; }
+  .status-line.warn { background: var(--gold-soft); border: 1px solid rgba(232,182,76,.40); color: var(--gold); }
 
-/* Result */
-.empty{text-align:center;padding:36px 10px;color:var(--dim-2)}
-.empty-icon{
-  width:52px;height:52px;border-radius:14px;margin:0 auto 12px;
-  background:var(--brand-grad-soft);border:1px solid var(--border-brand);
-  display:flex;align-items:center;justify-content:center;
-  color:#ff8fb5;font-size:20px;
-}
-.empty p{font-size:12.5px}
-.success-banner{
-  padding:10px 14px;border-radius:10px;
-  background:var(--brand-grad-soft);border:1px solid var(--border-brand);
-  color:#ff8fb5;font-size:11.5px;font-weight:700;letter-spacing:1.4px;
-  text-align:center;margin-bottom:14px;font-family:'Space Grotesk',sans-serif;
-  display:flex;align-items:center;justify-content:center;gap:7px;
-}
-.success-banner::before{
-  content:'';width:6px;height:6px;border-radius:50%;
-  background:#22d3a4;box-shadow:0 0 8px #22d3a4;
-}
-.link-row{display:flex;gap:6px;margin-bottom:12px}
-.link-input{
-  flex:1;background:rgba(0,0,0,.45);border:1px solid var(--border);
-  border-radius:9px;padding:10px 12px;color:#00d9ff;
-  font-family:monospace;font-size:11.5px;outline:none;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;
-}
-.result-actions{display:flex;gap:8px;flex-wrap:wrap}
-.result-actions .btn{flex:1;min-width:130px}
-.deploy-note{font-size:11px;color:var(--dim-2);margin-top:12px;text-align:center}
+  /* BUTTONS */
+  .btn {
+    display: block; width: 100%; padding: 14px; margin-top: 14px;
+    border: none; border-radius: 12px; cursor: pointer;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #111; font-size: 15px; font-weight: 800; font-family: inherit;
+    letter-spacing: .3px;
+    transition: all .15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,182,76,.28); }
+  .btn:active:not(:disabled) { transform: scale(0.98); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-red { background: linear-gradient(135deg, var(--red), var(--red-dark)); color: #fff; }
+  .btn-red:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(230,57,70,.32); }
+  .btn-ghost {
+    background: var(--bg-3); color: var(--gold); border: 1px solid var(--gold);
+    padding: 11px; font-size: 14px; font-weight: 600;
+  }
+  .btn-ghost:hover:not(:disabled) { background: rgba(232,182,76,.10); }
+  .btn-row { display: flex; gap: 10px; margin-top: 10px; }
+  .btn-row .btn { flex: 1; margin-top: 0; }
+  .link-btn {
+    background: none; border: none; color: #ff8095; cursor: pointer;
+    font-size: 12.5px; padding: 0; text-decoration: underline;
+  }
 
-/* Sites List */
-#sitesList{display:flex;flex-direction:column;gap:8px}
-.site-item{
-  display:flex;align-items:center;gap:12px;
-  padding:11px 13px;border-radius:11px;
-  background:rgba(255,255,255,.025);border:1px solid var(--border);
-  transition:all .2s;
-}
-.site-item:hover{background:rgba(255,255,255,.045);border-color:var(--border-brand)}
-.si-dot{width:8px;height:8px;border-radius:50%;flex:0 0 8px;background:var(--brand-grad);box-shadow:0 0 10px rgba(255,45,122,.6)}
-.si-main{flex:1;min-width:0}
-.si-name{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.si-meta{font-size:10.5px;color:var(--dim-2);margin-top:2px}
-.si-actions{display:flex;gap:4px}
-.icon-btn{
-  width:30px;height:30px;border-radius:7px;border:1px solid var(--border);
-  background:rgba(255,255,255,.03);color:var(--dim);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:12px;transition:all .15s;text-decoration:none;
-}
-.icon-btn:hover{color:var(--brand-pink);border-color:var(--border-brand);background:rgba(255,45,122,.08)}
+  /* PROGRESS */
+  .progress-wrap { margin-top: 14px; display: none; }
+  .progress-wrap.show { display: block; }
+  .progress-track {
+    height: 6px; background: var(--bg-3); border-radius: 3px;
+    overflow: hidden; border: 1px solid var(--border);
+  }
+  .progress-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    border-radius: 3px;
+    transition: width .3s ease-out;
+    box-shadow: 0 0 10px rgba(232,182,76,.4);
+  }
+  .progress-label {
+    margin-top: 8px; font-size: 12.5px; color: var(--muted);
+    text-align: center;
+  }
 
-/* Footer */
-.footer{
-  text-align:center;margin-top:32px;padding-top:24px;
-  border-top:1px solid var(--border);font-size:12px;
-  color:var(--dim-2);line-height:2;
-}
-.footer-brand{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
-.footer-brand b{background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  /* DEPLOY RESULT */
+  .deploy-box { margin-top: 16px; display: none; }
+  .deploy-box.show { display: block; animation: slideIn .3s ease-out; }
+  .success-banner {
+    padding: 11px 14px; border-radius: var(--radius-sm); text-align: center;
+    background: var(--gold-soft); border: 1px solid var(--gold);
+    color: var(--gold); font-size: 13px; font-weight: 800; letter-spacing: 1.4px;
+    margin-bottom: 12px;
+  }
+  .link-row { display: flex; gap: 6px; margin-bottom: 12px; }
+  .link-input {
+    flex: 1; background: #0f0f13; border: 1px solid var(--border);
+    border-radius: 9px; padding: 10px 12px; color: var(--cyan);
+    font-family: ui-monospace, "SF Mono", monospace; font-size: 12.5px;
+    outline: none; min-width: 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .copy-btn {
+    flex-shrink: 0; padding: 8px 14px; border-radius: 8px; cursor: pointer;
+    background: var(--bg-3); color: var(--gold); border: 1px solid var(--gold);
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    transition: all .2s;
+  }
+  .copy-btn:hover { background: rgba(232,182,76,.12); }
+  .copy-btn.copied { background: var(--green-bg); color: var(--green); border-color: var(--green-border); }
+  .deploy-note { font-size: 12.5px; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.55; }
 
-/* Toasts */
-.toasts{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
-  z-index:1000;display:flex;flex-direction:column;gap:8px;align-items:center;
-  pointer-events:none;width:100%;padding:0 16px;
-}
-.toast{
-  padding:10px 16px;border-radius:10px;
-  background:rgba(17,17,28,.95);border:1px solid var(--border-2);
-  color:var(--text);font-size:12.5px;font-weight:600;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
-  max-width:400px;text-align:center;
-  animation:toastIn .28s cubic-bezier(.34,1.56,.64,1);
-  backdrop-filter:blur(16px);
-}
-.toast.success{border-color:rgba(34,211,164,.45);color:#7de6c5}
-.toast.error{border-color:rgba(255,77,109,.45);color:#ff9caf}
-.toast.out{animation:toastOut .22s forwards}
-@keyframes toastIn{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:none}}
-@keyframes toastOut{to{opacity:0;transform:translateY(10px) scale(.95)}}
+  /* SITES LIST */
+  .site-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 12px; border-radius: var(--radius-sm); margin-bottom: 8px;
+    background: var(--bg-3); border: 1px solid var(--border);
+    transition: all .2s;
+  }
+  .site-item:hover { border-color: rgba(232,182,76,.35); }
+  .si-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex: 0 0 8px;
+    background: var(--gold); box-shadow: 0 0 8px var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .55; }
+  }
+  .si-main { flex: 1; min-width: 0; }
+  .si-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .si-meta { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+  .si-meta a { color: var(--cyan); text-decoration: none; word-break: break-all; }
+  .si-meta a:hover { text-decoration: underline; }
+  .si-actions { display: flex; gap: 4px; flex-shrink: 0; }
+  .si-actions button {
+    width: 30px; height: 30px; border-radius: 7px;
+    border: 1px solid var(--border); background: var(--bg-2);
+    cursor: pointer; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .si-actions button:hover { border-color: var(--gold); background: rgba(232,182,76,.1); }
+  .si-actions .del { background: var(--red-bg); border-color: var(--border); color: #ff8095; }
+  .si-actions .del:hover { background: rgba(230,57,70,.25); border-color: var(--red-border); }
+  .empty-sites { text-align: center; color: #8a8378; font-size: 13.5px; padding: 16px 0 8px; }
 
-@media(max-width:600px){
-  .wrap{padding:14px 12px 40px}
-  .topbar{padding:11px 14px;gap:10px;top:8px}
-  .brand-mark{width:38px;height:38px;flex-basis:38px;font-size:15px}
-  .brand-text h1{font-size:14px}
-  .brand-text p{display:none}
-  .hero h2{font-size:24px}
-}
+  /* CONTACT CARD */
+  .contact-card {
+    background: linear-gradient(135deg, rgba(37,211,102,.06), rgba(232,182,76,.04));
+    border: 1px solid rgba(37,211,102,.30);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+    margin-top: 18px;
+    text-align: center;
+  }
+  .contact-card h2 { color: var(--gold); margin-bottom: 6px; }
+  .contact-card p { color: var(--muted); font-size: 13.5px; margin-bottom: 14px; }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: #fff; text-decoration: none;
+    border-radius: 12px; font-weight: 700; font-size: 14.5px;
+    box-shadow: 0 6px 20px rgba(37,211,102,.25);
+    transition: all .2s;
+  }
+  .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(37,211,102,.35); }
+  .wa-btn svg { width: 20px; height: 20px; fill: currentColor; }
+  .contact-meta { margin-top: 10px; font-size: 12px; color: var(--muted); }
+  .contact-meta b { color: var(--text); font-family: ui-monospace, monospace; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; margin-top: 32px;
+    color: #8a8378; font-size: 13.5px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    line-height: 1.7;
+  }
+  footer b { color: var(--gold); }
+  footer a { color: #4ade80; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* FLOATING WHATSAPP */
+  .wa-float {
+    position: fixed; bottom: 22px; right: 22px;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(37,211,102,.4);
+    text-decoration: none; z-index: 999;
+    transition: all .25s;
+    animation: wa-bounce 3s ease-in-out infinite;
+  }
+  .wa-float svg { width: 28px; height: 28px; fill: currentColor; }
+  .wa-float:hover { transform: scale(1.08); box-shadow: 0 10px 30px rgba(37,211,102,.55); }
+  @keyframes wa-bounce {
+    0%, 90%, 100% { transform: scale(1); }
+    94% { transform: scale(1.08); }
+    97% { transform: scale(1); }
+  }
+  .wa-float::after {
+    content: ''; position: absolute; inset: -4px;
+    border-radius: 50%; border: 2px solid rgba(37,211,102,.4);
+    animation: wa-ring 2s ease-out infinite;
+  }
+  @keyframes wa-ring {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
+  /* TOASTS */
+  .toasts {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+    z-index: 1000; display: flex; flex-direction: column; gap: 8px; align-items: center;
+    pointer-events: none; width: 100%; padding: 0 16px;
+  }
+  .toast {
+    padding: 11px 18px; border-radius: var(--radius-sm);
+    background: rgba(20,20,26,.97); border: 1px solid var(--border-2);
+    color: var(--text); font-size: 13px; font-weight: 600;
+    box-shadow: var(--shadow);
+    max-width: 380px; text-align: center;
+    animation: toastIn .25s ease-out;
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .toast.success { border-color: var(--green-border); color: var(--green); }
+  .toast.error { border-color: var(--red-border); color: #ff9caf; }
+
+  /* RESPONSIVE */
+  @media (max-width: 480px) {
+    h1 { font-size: 22px; }
+    .steps-bar { gap: 4px; }
+    .step-ind { padding: 3px 7px; font-size: 10.5px; }
+    .step-ind span { width: 18px; height: 18px; font-size: 10px; }
+    .step-line { max-width: 16px; }
+    section { padding: 16px 14px; }
+    .wa-float { width: 52px; height: 52px; bottom: 18px; right: 18px; }
+    .wa-float svg { width: 26px; height: 26px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header class="topbar">
-    <div class="brand-mark">SM</div>
-    <div class="brand-text">
-      <h1>SAJEEL <span>MODS</span></h1>
-      <p>Premium Portfolio Builder</p>
+  <!-- HEADER -->
+  <header>
+    <div class="crown">👑</div>
+    <h1>SAJEEL <span>MODS</span></h1>
+    <p class="sub">Free web hosting — koi bhi file upload karo, naam likho, instant live link lo. HTML, CSS, JS, images sab kuch.</p>
+    <div class="badges">
+      <span class="badge green">100% FREE</span>
+      <span class="badge">NO ADS</span>
+      <span class="badge">MULTI-FILE</span>
+      <span class="badge">FOLDER SUPPORT</span>
     </div>
-    <div class="topbar-right">
-      <span class="status-pill"><span class="dot"></span>Deploy Ready</span>
-    </div>
+    <a class="contact-top" href="https://wa.me/923061601587?text=Assalam%20o%20Alaikum%20Sajeel%20Mods!%20Mujhe%20hosting%20ke%20baare%20mein%20help%20chahiye." target="_blank" rel="noopener">
+      <span>💬</span> Contact Developer
+    </a>
   </header>
 
-  <section class="hero">
-    <div class="hero-badge">✦ PREMIUM TOOL ✦</div>
-    <h2>Build. Preview. <span class="accent">Deploy.</span></h2>
-    <p>Apni portfolio website banao — live preview dekho, download karo, ya ek click mein deploy karo.</p>
+  <!-- STEPS -->
+  <div class="steps-bar">
+    <div class="step-ind active" id="stepInd1"><span>1</span> Upload</div>
+    <div class="step-line"></div>
+    <div class="step-ind" id="stepInd2"><span>2</span> Naam</div>
+    <div class="step-line"></div>
+    <div class="step-ind" id="stepInd3"><span>3</span> Deploy</div>
+  </div>
+
+  <!-- 1. UPLOAD -->
+  <section id="stepUpload">
+    <h2>📁 1. Files Upload karo</h2>
+    <p class="sec-sub">HTML, CSS, JS, images — jitni files chahiye, ek saath daalo. Folder bhi drag kar sakte ho.</p>
+
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Files upload karo">
+      <div class="dz-icon">⬆️</div>
+      <div class="dz-title">Drop files or tap to browse</div>
+      <div class="dz-sub">Multiple files · Folders · HTML · CSS · JS · Images · Fonts</div>
+      <input type="file" id="fileInput" multiple hidden>
+      <input type="file" id="folderInput" webkitdirectory directory multiple hidden>
+    </div>
+
+    <div class="btn-row" style="margin-top:10px;">
+      <button class="btn btn-ghost" type="button" id="browseFilesBtn" style="margin-top:0;">📄 Files</button>
+      <button class="btn btn-ghost" type="button" id="browseFolderBtn" style="margin-top:0;">📁 Folder</button>
+    </div>
+
+    <div class="file-list" id="fileList"></div>
+    <div class="file-meta" id="fileMeta" style="display:none">
+      <span id="fileCount">0 files</span>
+      <span id="fileSize">0 KB</span>
+      <span class="spacer"></span>
+      <button type="button" id="clearFiles">Clear all</button>
+    </div>
+
+    <div class="status-line bad" id="indexStatus">⚠️ index.html nahi hai — Vercel ko entry file chahiye. Pehle index.html upload karo.</div>
+    <div class="status-line warn" id="sizeWarn" style="display:none"></div>
   </section>
 
-  <main class="layout">
+  <!-- 2. NAME -->
+  <section id="stepName">
+    <h2>✏️ 2. Site ka Naam likho</h2>
+    <p class="sec-sub">Ye naam tumhari live link ke liye use hoga.</p>
+    <input type="text" id="siteName" placeholder="Jaise: meri-website" maxlength="60" autocomplete="off" spellcheck="false">
+    <label class="check-row">
+      <input type="checkbox" id="cleanUrl">
+      <span>Clean URL try karo (agar naam taken ho to random suffix add hoga)</span>
+    </label>
+    <div class="hint">Sirf English letters, numbers aur hyphens use karo. Urdu naam ho to automatic "site-..." bana jayega.</div>
+    <div class="slug-pill" id="slugPreview">
+      Project: <b>—</b>
+      <span class="note">Live URL deploy ke baad assign hoga (Vercel decide karta hai).</span>
+    </div>
+  </section>
 
-    <!-- CONFIG -->
-    <section class="card">
-      <div class="card-head">
-        <h3><span class="step">1</span>CONFIGURE</h3>
-        <span class="pill" id="storagePill">0 KB used</span>
+  <!-- 3. DEPLOY -->
+  <section id="stepDeploy">
+    <h2>🚀 3. Deploy karo</h2>
+    <p class="sec-sub">Pehle preview dekh lo, phir ek click mein live karo.</p>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" type="button" id="previewBtn" disabled>👁️ Index Preview</button>
+    </div>
+    <p class="hint">Preview mein sirf index.html dikhegi — CSS/JS/images sirf live site par resolve honge.</p>
+
+    <button class="btn" type="button" id="deployBtn" disabled>🚀 DEPLOY — Live Link Lo</button>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="progress-label" id="progressLabel">Taiyari...</div>
+    </div>
+
+    <div class="msg" id="deployMsg"></div>
+
+    <div class="deploy-box" id="deployBox">
+      <div class="success-banner">✅ DEPLOYED LIVE</div>
+      <div class="link-row">
+        <input readonly id="deployLink" class="link-input">
+        <button class="copy-btn" type="button" id="copyDeployBtn">Copy</button>
       </div>
-      <div class="card-body">
-
-        <div class="field">
-          <label>Website Name</label>
-          <div class="input-wrap">
-            <input type="text" id="sitename" placeholder="my-awesome-site" maxlength="41" autocomplete="off" spellcheck="false">
-          </div>
-          <p class="hint">Letters, numbers, hyphens, underscores · 2–41 characters</p>
-        </div>
-
-        <div class="field">
-          <label>Files</label>
-          <div class="dropzone" id="dropzone">
-            <div class="dz-icon">⬆</div>
-            <div class="dz-title">Drop files here or click to browse</div>
-            <div class="dz-sub">HTML · CSS · JS · JSON · SVG · images · fonts</div>
-            <input type="file" id="fileInput" multiple hidden>
-          </div>
-          <div class="file-list" id="fileList"></div>
-          <div class="file-meta">
-            <span id="fileCount">0 files</span>
-            <span id="fileSize">0 KB</span>
-            <button class="link-btn" id="clearFiles" style="display:none">Clear all</button>
-          </div>
-        </div>
-
-        <button class="btn primary btn-block" id="createBtn">
-          <span>⚡ CREATE WEBSITE</span>
-        </button>
-        <p class="msg" id="message"></p>
-
+      <div class="btn-row">
+        <a class="btn btn-red" id="openDeploy" target="_blank" rel="noopener" style="text-decoration:none;text-align:center;margin-top:0;">🌐 Visit Live Site</a>
       </div>
-    </section>
+      <p class="deploy-note" id="deployNote"></p>
+    </div>
 
-    <!-- RESULT -->
-    <section class="card">
-      <div class="card-head">
-        <h3><span class="step">2</span>RESULT</h3>
-      </div>
-      <div class="card-body">
+    <button class="btn-ghost btn" type="button" id="resetBtn" style="margin-top:16px;">🔄 Clear / Reset</button>
+  </section>
 
-        <div class="empty" id="emptyResult">
-          <div class="empty-icon">◈</div>
-          <p>Your generated site will appear here.</p>
-        </div>
+  <!-- YOUR SITES -->
+  <section id="stepSites">
+    <h2>🌐 Your Sites</h2>
+    <p class="sec-sub">Is browser mein deploy ki gayi sites — yahin se dobara kholo.</p>
+    <div id="sitesList"></div>
+    <div style="text-align:right;margin-top:6px;">
+      <button class="link-btn" type="button" id="clearSites" style="display:none;">Clear all sites</button>
+    </div>
+  </section>
 
-        <div id="resultBox" style="display:none">
-          <div class="success-banner">WEBSITE READY</div>
-          <div class="link-row">
-            <input readonly id="siteLink" class="link-input">
-            <button class="btn sm" id="copyLink">Copy</button>
-          </div>
-          <div class="result-actions">
-            <a class="btn primary" id="openSite" target="_blank" rel="noopener">🌐 Open</a>
-            <button class="btn" id="downloadAll">⬇ Download</button>
-          </div>
-          <p class="hint" style="margin-top:14px">
-            ⓘ Saved locally. Same device/browser par hi link kaam karega.
-          </p>
-        </div>
+  <!-- CONTACT DEVELOPER -->
+  <div class="contact-card" id="contactDev">
+    <h2>💬 Contact Developer</h2>
+    <p>Koi masla, sawal ya custom kaam? Sajeel Mods ko WhatsApp karo — seedha jawab milega.</p>
+    <a class="wa-btn" href="https://wa.me/923061601587?text=Assalam%20o%20Alaikum%20Sajeel%20Mods!%20Mujhe%20hosting%20ke%20baare%20mein%20help%20chahiye." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Chat on WhatsApp
+    </a>
+    <div class="contact-meta">📞 <b>+92 306 1601587</b></div>
+  </div>
 
-      </div>
-    </section>
-
-    <!-- DEPLOY -->
-    <section class="card" id="deployCard">
-      <div class="card-head">
-        <h3><span class="step">3</span>DEPLOY TO HOSTING</h3>
-      </div>
-      <div class="card-body">
-
-        <div class="empty" id="emptyDeploy">
-          <div class="empty-icon">🚀</div>
-          <p>Generate your website first, then deploy it live.</p>
-        </div>
-
-        <div id="deployBox" style="display:none">
-          <div class="success-banner" id="deployBanner">DEPLOYED</div>
-          <div class="link-row">
-            <input readonly id="deployLink" class="link-input">
-            <button class="btn sm" id="copyDeploy">Copy</button>
-          </div>
-          <div class="result-actions">
-            <a class="btn primary" id="openDeploy" target="_blank" rel="noopener">🌐 Visit Live Site</a>
-          </div>
-          <p class="deploy-note" id="deployNote">Your portfolio is live on sajeel-hosting.vercel.app</p>
-        </div>
-
-        <button class="btn primary btn-block" id="deployBtn" style="margin-top:14px">
-          <span>🚀 DEPLOY TO SAJEEL HOSTING</span>
-        </button>
-        <p class="msg" id="deployMsg"></p>
-        <p class="hint" style="margin-top:10px;text-align:center">
-          Deploys your generated HTML to <b>sajeel-hosting.vercel.app</b> and returns a live link.
-        </p>
-
-      </div>
-    </section>
-
-    <!-- SITES -->
-    <section class="card sites-card" id="sitesCard" style="display:none">
-      <div class="card-head">
-        <h3><span class="step">4</span>YOUR SITES</h3>
-        <button class="link-btn danger" id="clearAll">Clear all</button>
-      </div>
-      <div class="card-body">
-        <div id="sitesList"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="footer-brand">Crafted by <b>SAJEEL MODS</b></div>
-    <p>&copy; 2025 SAJEEL MODS · All Rights Reserved</p>
+  <footer>
+    Developed with <span style="color:var(--red);">♥</span> by <b>SAJEEL MODS</b> 👑<br>
+    <a href="https://wa.me/923061601587?text=Assalam%20o%20Alaikum%20Sajeel%20Mods!%20Mujhe%20hosting%20ke%20baare%20mein%20help%20chahiye." target="_blank" rel="noopener">💬 Contact Developer</a>
   </footer>
 
 </div>
 
+<!-- FLOATING WHATSAPP -->
+<a class="wa-float" href="https://wa.me/923061601587?text=Assalam%20o%20Alaikum%20Sajeel%20Mods!%20Mujhe%20hosting%20ke%20baare%20mein%20help%20chahiye." target="_blank" rel="noopener" aria-label="WhatsApp par contact karo">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
 <div class="toasts" id="toasts"></div>
 
 <script>
-(function(){
-'use strict';
+(function () {
+  "use strict";
 
-const $ = id => document.getElementById(id);
-const SITE_PREFIX = 'sm_site_';
-const MAX_BYTES = 4.5 * 1024 * 1024;
-const TEXT_EXT = ['html','htm','css','js','json','txt','svg','md','xml','webmanifest'];
+  /* ================= CONFIG ================= */
+  var DEPLOY_API = 'https://sajeel-hosting.vercel.app/api/deploy';
+  var SITES_KEY = 'sm_host_sites';
+  var WHATSAPP_URL = 'https://wa.me/923061601587?text=Assalam%20o%20Alaikum%20Sajeel%20Mods!%20Mujhe%20hosting%20ke%20baare%20mein%20help%20chahiye.';
 
-let files = new Map();
-let currentSite = null;
+  // Vercel serverless body limit ~4.5MB (JSON). Base64 adds ~33%,
+  // so 3MB of raw files → ~4MB base64 → fits safely.
+  var MAX_TOTAL_BYTES = 3 * 1024 * 1024;   // 3 MB total cap
+  var MAX_FILE_BYTES  = 2 * 1024 * 1024;   // 2 MB per file
+  var WARN_TOTAL_BYTES = 2 * 1024 * 1024;  // 2 MB warning
 
-function fmtBytes(n){
-  if (n < 1024) return n + ' B';
-  if (n < 1024*1024) return (n/1024).toFixed(1) + ' KB';
-  return (n/1024/1024).toFixed(2) + ' MB';
-}
-function escapeHtml(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function fileIcon(name){
-  const n = name.toLowerCase();
-  if (n.endsWith('.html')||n.endsWith('.htm')) return '◈';
-  if (n.endsWith('.css')) return '◐';
-  if (n.endsWith('.js')) return '⚙';
-  if (n.endsWith('.json')) return '{}';
-  if (n.endsWith('.svg')) return '◉';
-  if (/\.(png|jpe?g|gif|webp|bmp|ico)$/.test(n)) return '🖼';
-  if (/\.(woff2?|ttf|otf|eot)$/.test(n)) return 'Aa';
-  return '📄';
-}
-function toast(msg, type){
-  const wrap = $('toasts');
-  const el = document.createElement('div');
-  el.className = 'toast ' + (type||'');
-  el.textContent = msg;
-  wrap.appendChild(el);
-  setTimeout(()=>{
-    el.classList.add('out');
-    setTimeout(()=>el.remove(), 230);
-  }, 2600);
-}
+  /* ================= STATE ================= */
+  var files = [];
+  var deployedUrl = null;
+  var isDeploying = false;
+  var progressTimer = null;
 
-function totalSize(){ let t=0; files.forEach(f=>t+=f.size); return t; }
-function updateStoragePill(){
-  let used = 0;
-  for (let i=0;i<localStorage.length;i++){
-    const k = localStorage.key(i);
-    if (k.startsWith(SITE_PREFIX)) used += (localStorage.getItem(k)||'').length;
+  /* ================= HELPERS ================= */
+  function $(id) { return document.getElementById(id); }
+
+  function fmtBytes(n) {
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+    return (n / (1024 * 1024)).toFixed(2) + ' MB';
   }
-  $('storagePill').textContent = fmtBytes(used) + ' used';
-}
-function getSites(){
-  const out = [];
-  for (let i=0;i<localStorage.length;i++){
-    const k = localStorage.key(i);
-    if (!k.startsWith(SITE_PREFIX)) continue;
-    try { out.push({key:k, ...JSON.parse(localStorage.getItem(k))}); } catch(e){}
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
-  out.sort((a,b)=>b.createdAt-a.createdAt);
-  return out;
-}
-
-function validateName(silent){
-  const name = $('sitename').value.trim();
-  if (!name){
-    if (!silent) $('message').textContent='';
-    return false;
-  }
-  if (name.length < 2 || name.length > 41){
-    if (!silent) $('message').textContent='Name must be 2–41 characters.';
-    return false;
-  }
-  if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]*$/.test(name)){
-    if (!silent) $('message').textContent='Only letters, numbers, hyphens, underscores. Must start with letter/number.';
-    return false;
-  }
-  if (localStorage.getItem(SITE_PREFIX + name)){
-    if (!silent) $('message').textContent='This name already exists — will overwrite on create.';
-    return true;
-  }
-  if (!silent) $('message').textContent='';
-  return true;
-}
-
-function renderFiles(){
-  const list = $('fileList');
-  list.innerHTML = '';
-  files.forEach((f, name) => {
-    const el = document.createElement('div');
-    el.className = 'file-item';
-    el.innerHTML = `
-      <div class="fi-icon">${fileIcon(name)}</div>
-      <div class="fi-info">
-        <div class="fi-name">${escapeHtml(name)}</div>
-        <div class="fi-size">${fmtBytes(f.size)}</div>
-      </div>
-      <button class="fi-remove" data-name="${escapeHtml(name)}" title="Remove">✕</button>
-    `;
-    el.querySelector('.fi-remove').onclick = () => {
-      files.delete(name);
-      renderFiles();
-    };
-    list.appendChild(el);
-  });
-  $('fileCount').textContent = files.size + (files.size===1?' file':' files');
-  $('fileSize').textContent = fmtBytes(totalSize());
-  $('clearFiles').style.display = files.size ? 'inline' : 'none';
-}
-
-function readFileAsText(file){
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = () => rej(r.error);
-    r.readAsText(file);
-  });
-}
-function readFileAsDataURL(file){
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = () => rej(r.error);
-    r.readAsDataURL(file);
-  });
-}
-
-async function addFiles(fileList){
-  let added = 0, skipped = 0;
-  for (const f of fileList){
-    if (!f.name || f.name.includes('/') || f.name.includes('\\')){
-      toast('Invalid filename: ' + f.name, 'error'); skipped++; continue;
-    }
-    if (f.size > 2 * 1024 * 1024){
-      toast(f.name + ' is too large (max 2MB)', 'error'); skipped++; continue;
-    }
-    const ext = f.name.toLowerCase().split('.').pop();
-    const isText = TEXT_EXT.includes(ext);
+  function safeUrl(u) {
     try {
-      const content = isText ? await readFileAsText(f) : await readFileAsDataURL(f);
-      files.set(f.name, {content, size: f.size, type: isText ? 'text' : 'binary'});
-      added++;
-    } catch(e){
-      toast('Failed to read ' + f.name, 'error'); skipped++;
+      var p = new URL(u);
+      return (p.protocol === 'http:' || p.protocol === 'https:') ? u : null;
+    } catch (e) { return null; }
+  }
+  function fileIcon(name) {
+    var n = name.toLowerCase();
+    if (/\.html?$/.test(n)) return '◈';
+    if (/\.css$/.test(n)) return '◐';
+    if (/\.js$/.test(n)) return '⚙';
+    if (/\.json$/.test(n)) return '{}';
+    if (/\.svg$/.test(n)) return '◉';
+    if (/\.(png|jpe?g|gif|webp|bmp|ico)$/.test(n)) return '🖼';
+    if (/\.(woff2?|ttf|otf|eot)$/.test(n)) return 'Aa';
+    if (/\.(mp4|webm|ogg|mp3|wav)$/.test(n)) return '▶';
+    if (/\.(pdf|docx?|xlsx?|pptx?)$/.test(n)) return '📄';
+    return '📄';
+  }
+  function toast(msg, type) {
+    var wrap = $('toasts');
+    var el = document.createElement('div');
+    el.className = 'toast ' + (type || '');
+    el.textContent = msg;
+    wrap.appendChild(el);
+    setTimeout(function () { el.remove(); }, 3200);
+  }
+  function randomSuffix() {
+    var chars = 'abcdefghjkmnpqrstuvwxyz23456789';
+    var out = '';
+    for (var i = 0; i < 4; i++) out += chars[Math.floor(Math.random() * chars.length)];
+    return out;
+  }
+
+  /* ---------- Slug (same rules as the portfolio builder stable-link fix) ---------- */
+  function slugify(name) {
+    var s = String(name || '').toLowerCase().trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 40)
+      .replace(/-$/, '');
+    if (!s) s = 'site-' + Date.now().toString(36);
+    return s;
+  }
+  function resolveSlug() {
+    var base = slugify($('siteName').value.trim());
+    if ($('cleanUrl').checked) return base;
+    // Non-clean: append random suffix (reduces cross-user collision)
+    return base + '-' + randomSuffix();
+  }
+
+  function totalSize() {
+    var t = 0;
+    for (var i = 0; i < files.length; i++) t += files[i].size;
+    return t;
+  }
+  function hasIndex() {
+    for (var i = 0; i < files.length; i++) {
+      if (files[i].name.toLowerCase() === 'index.html') return true;
+    }
+    return false;
+  }
+
+  /* ================= FILE READING ================= */
+  function readFileAsDataURL(file) {
+    return new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () { res(r.result); };
+      r.onerror = function () { rej(r.error || new Error('read failed')); };
+      r.readAsDataURL(file);
+    });
+  }
+
+  async function walkEntry(entry, basePath, out) {
+    if (!entry) return;
+    if (entry.isFile) {
+      var file = await new Promise(function (res, rej) {
+        entry.file(res, rej);
+      });
+      out.push({ file: file, path: basePath + entry.name });
+    } else if (entry.isDirectory) {
+      var reader = entry.createReader();
+      var all = [];
+      // readEntries returns in batches — keep reading till empty
+      while (true) {
+        var batch = await new Promise(function (res, rej) {
+          reader.readEntries(res, rej);
+        });
+        if (!batch.length) break;
+        all = all.concat(Array.prototype.slice.call(batch));
+      }
+      for (var i = 0; i < all.length; i++) {
+        await walkEntry(all[i], basePath + entry.name + '/', out);
+      }
     }
   }
-  if (added) renderFiles();
-  if (added && !skipped) toast(added + ' file(s) added', 'success');
-}
 
-async function createWebsite(){
-  const name = $('sitename').value.trim();
-  const msg = $('message');
-  msg.textContent = '';
-
-  if (!name){ msg.textContent='Please enter a website name.'; return; }
-  if (!validateName()){ return; }
-  if (files.size === 0){ msg.textContent='Please add at least one file.'; return; }
-
-  const hasHtml = [...files.keys()].some(n => /\.html?$/i.test(n));
-  if (!hasHtml){ msg.textContent='Please include at least one HTML file (e.g. index.html).'; return; }
-
-  if (totalSize() > MAX_BYTES){
-    msg.textContent='Total size exceeds 4.5 MB. Remove some files.';
-    return;
+  async function filesFromDataTransfer(dt) {
+    var out = [];
+    var items = dt.items;
+    if (!items || !items.length) {
+      var fl = Array.prototype.slice.call(dt.files || []);
+      for (var i = 0; i < fl.length; i++) {
+        out.push({ file: fl[i], path: fl[i].name });
+      }
+      return out;
+    }
+    for (var j = 0; j < items.length; j++) {
+      var it = items[j];
+      if (it.kind !== 'file') continue;
+      var entry = it.webkitGetAsEntry ? it.webkitGetAsEntry() : null;
+      if (entry) {
+        await walkEntry(entry, '', out);
+      } else {
+        var f = it.getAsFile();
+        if (f) out.push({ file: f, path: f.name });
+      }
+    }
+    return out;
   }
 
-  const key = SITE_PREFIX + name;
-  if (localStorage.getItem(key)){
-    if (!confirm('Site "' + name + '" already exists. Overwrite it?')) return;
+  async function addFiles(items) {
+    var added = 0, skippedSize = 0, skippedTotal = 0;
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var file, rel;
+      if (item instanceof File) {
+        file = item;
+        rel = item.webkitRelativePath || item.name;
+      } else if (item && item.file) {
+        file = item.file;
+        rel = item.path || file.name;
+      } else continue;
+
+      // Skip hidden/system files
+      var parts = rel.split('/');
+      var hidden = false;
+      for (var p = 0; p < parts.length; p++) {
+        if (!parts[p] || parts[p].charAt(0) === '.' || parts[p] === '__MACOSX') { hidden = true; break; }
+      }
+      if (hidden) continue;
+
+      if (file.size > MAX_FILE_BYTES) { skippedSize++; continue; }
+      if (totalSize() + file.size > MAX_TOTAL_BYTES) { skippedTotal++; continue; }
+
+      try {
+        var du = await readFileAsDataURL(file);
+        var comma = du.indexOf(',');
+        var head = du.slice(0, comma);
+        var data = du.slice(comma + 1);
+        var mime = (head.match(/:(.*?);/) || [])[1] || 'application/octet-stream';
+        var entryObj = { name: rel, size: file.size, mime: mime, data: data };
+        var ex = -1;
+        for (var k = 0; k < files.length; k++) {
+          if (files[k].name === rel) { ex = k; break; }
+        }
+        if (ex >= 0) files[ex] = entryObj;
+        else files.push(entryObj);
+        added++;
+      } catch (e) {
+        toast('Read fail: ' + rel, 'error');
+      }
+    }
+    if (skippedSize) toast(skippedSize + ' file(s) ' + fmtBytes(MAX_FILE_BYTES) + ' se badi thi — skip', 'error');
+    if (skippedTotal) toast('Total size limit cross ho jayegi — kuch files skip hui', 'error');
+    if (added) { renderFiles(); updateDeployState(); updateSteps(); }
+    return added;
   }
 
-  const data = {
-    name,
-    createdAt: Date.now(),
-    files: [...files.entries()].map(([n, f]) => ({
-      name: n, content: f.content, type: f.type
-    }))
-  };
-
-  const btn = $('createBtn');
-  btn.disabled = true;
-  btn.querySelector('span').textContent = '⏳ SAVING...';
-
-  try {
-    localStorage.setItem(key, JSON.stringify(data));
-    showResult(name);
-    renderSites();
-    toast('Website "' + name + '" created!', 'success');
-  } catch(e){
-    console.error(e);
-    msg.textContent = 'Storage full! Delete old sites from "Your Sites".';
-    toast('Storage full', 'error');
-  } finally {
-    btn.disabled = false;
-    btn.querySelector('span').textContent = '⚡ CREATE WEBSITE';
-  }
-}
-
-function showResult(name){
-  currentSite = name;
-  const link = new URL('view.html?site=' + encodeURIComponent(name), location.href).href;
-  $('siteLink').value = link;
-  $('openSite').href = link;
-  $('resultBox').style.display = 'block';
-  $('emptyResult').style.display = 'none';
-  // Deploy card: show "ready to deploy" (pehle dono chhup jate the, card khaali rehta tha)
-  $('deployBox').style.display = 'none';
-  $('emptyDeploy').style.display = 'block';
-  $('deployLink').value = '';
-  $('deployMsg').textContent = '';
-  const p = $('emptyDeploy').querySelector('p');
-  if (p) p.textContent = 'Website ready — ab DEPLOY dabao!';
-}
-
-/* ===== DEPLOY FUNCTION ===== */
-async function deployToHosting(){
-  const msg = $('deployMsg');
-  msg.textContent = '';
-
-  if (!currentSite){
-    msg.textContent = 'Pehle website create karo (Step 1).';
-    return;
-  }
-
-  // Get the generated site from localStorage
-  const raw = localStorage.getItem(SITE_PREFIX + currentSite);
-  if (!raw){ msg.textContent = 'Site data not found.'; return; }
-  let data;
-  try { data = JSON.parse(raw); }
-  catch(e){ msg.textContent = 'Site data corrupt hai. Dobara create karo.'; return; }
-
-  // Deploy sirf ek HTML file hoti hai — index.html ko prefer karo
-  const htmlFiles = (data.files || []).filter(f => /\.html?$/i.test(f.name) && f.type === 'text');
-  if (!htmlFiles.length){ msg.textContent = 'No HTML file found.'; return; }
-  const htmlFile = htmlFiles.find(f => /^index\.html?$/i.test(f.name)) || htmlFiles[0];
-
-  // Baaki files (CSS/JS/images) deploy nahi hoti — user ko pehle batao
-  const extraCount = (data.files || []).length - 1;
-  if (extraCount > 0){
-    if (!confirm('Sirf "' + htmlFile.name + '" deploy hogi. Baaki ' + extraCount + ' file(s) (CSS/JS/images) live site par nahi aayengi — agar unki zaroorat hai to unka code HTML ke andar daalo. Deploy karun?')) return;
-  }
-
-  const html = htmlFile.content;
-
-  const btn = $('deployBtn');
-  btn.disabled = true;
-  btn.querySelector('span').textContent = '⏳ DEPLOYING...';
-  msg.textContent = '';
-
-  try {
-    const res = await fetch('https://sajeel-hosting.vercel.app/api/deploy', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ html, name: currentSite })
+  /* ================= RENDER ================= */
+  function renderFiles() {
+    var list = $('fileList');
+    list.innerHTML = '';
+    files.forEach(function (f) {
+      var el = document.createElement('div');
+      el.className = 'file-item';
+      el.innerHTML =
+        '<div class="fi-icon">' + fileIcon(f.name) + '</div>' +
+        '<div class="fi-info">' +
+          '<div class="fi-name" title="' + escapeHtml(f.name) + '">' + escapeHtml(f.name) + '</div>' +
+          '<div class="fi-size">' + fmtBytes(f.size) + '</div>' +
+        '</div>' +
+        '<button class="fi-remove" type="button" title="Remove">✕</button>';
+      el.querySelector('.fi-remove').addEventListener('click', function () {
+        files = files.filter(function (x) { return x.name !== f.name; });
+        renderFiles(); updateDeployState(); updateSteps();
+      });
+      list.appendChild(el);
     });
 
-    const json = await res.json().catch(() => ({}));
-    if (!res.ok || json.error){
-      throw new Error(json.error || ('Deployment failed (HTTP ' + res.status + ')'));
+    var meta = $('fileMeta');
+    meta.style.display = files.length ? 'flex' : 'none';
+    $('fileCount').textContent = files.length + (files.length === 1 ? ' file' : ' files');
+    $('fileSize').textContent = fmtBytes(totalSize());
+
+    var st = $('indexStatus');
+    if (!files.length) {
+      st.className = 'status-line bad';
+      st.textContent = '⚠️ index.html nahi hai — Vercel ko entry file chahiye. Pehle index.html upload karo.';
+    } else if (hasIndex()) {
+      st.className = 'status-line ok';
+      st.textContent = '✔ index.html mil gayi — deploy ke liye tayyar hai.';
+    } else {
+      st.className = 'status-line bad';
+      st.textContent = '⚠️ index.html nahi hai — Vercel ko entry file chahiye. index.html naam ki file add karo.';
     }
-    if (!json.url) throw new Error('Server ne live link nahi bheja.');
 
-    const url = json.url;
-    $('deployLink').value = url;
-    $('openDeploy').href = url;
-    $('deployBox').style.display = 'block';
-    $('emptyDeploy').style.display = 'none';
-    $('deployBanner').textContent = '✅ DEPLOYED LIVE';
-    $('deployNote').textContent = 'Your portfolio is live at: ' + url;
-    toast('Deployed successfully!', 'success');
-
-    // Live link save karo taake reload ke baad bhi "Your Sites" mein mile
-    data.deployedUrl = url;
-    try { localStorage.setItem(SITE_PREFIX + currentSite, JSON.stringify(data)); } catch(e){}
-    renderSites();
-
-  } catch(err){
-    console.error(err);
-    msg.textContent = err.message || 'Deployment failed. Check console.';
-    toast('Deploy failed: ' + (err.message || 'unknown error'), 'error');
-  } finally {
-    btn.disabled = false;
-    btn.querySelector('span').textContent = '🚀 DEPLOY TO SAJEEL HOSTING';
+    var w = $('sizeWarn');
+    var total = totalSize();
+    if (total > MAX_TOTAL_BYTES) {
+      w.style.display = 'block';
+      w.textContent = '⛔ Total ' + fmtBytes(total) + ' hai — ' + fmtBytes(MAX_TOTAL_BYTES) + ' limit cross ho gayi. Kuch files hatao.';
+    } else if (total > WARN_TOTAL_BYTES) {
+      w.style.display = 'block';
+      w.textContent = '⚠️ Total ' + fmtBytes(total) + ' — badi site hai, Vercel free plan par deploy slow ho sakta hai.';
+    } else {
+      w.style.display = 'none';
+      w.textContent = '';
+    }
   }
-}
 
-/* ===== SITES LIST ===== */
-function renderSites(){
-  const sites = getSites();
-  $('sitesCard').style.display = sites.length ? 'block' : 'none';
-  const box = $('sitesList');
-  box.innerHTML = sites.map(s => `
-    <div class="site-item">
-      <div class="si-dot"></div>
-      <div class="si-main">
-        <div class="si-name">${escapeHtml(s.name)}</div>
-        <div class="si-meta">${s.files.length} file${s.files.length===1?'':'s'} · ${new Date(s.createdAt).toLocaleDateString()}</div>
-      </div>
-      <div class="si-actions">
-        ${s.deployedUrl ? `<a class="icon-btn" href="${escapeHtml(s.deployedUrl)}" target="_blank" rel="noopener" title="Live site">🌐</a>` : ''}
-        <a class="icon-btn" href="view.html?site=${encodeURIComponent(s.name)}" target="_blank" rel="noopener" title="Open">↗</a>
-        <button class="icon-btn" data-dl="${escapeHtml(s.name)}" title="Download">⬇</button>
-        <button class="icon-btn danger" data-del="${escapeHtml(s.name)}" title="Delete">✕</button>
-      </div>
-    </div>
-  `).join('');
-
-  box.querySelectorAll('[data-del]').forEach(b => b.onclick = () => deleteSite(b.dataset.del));
-  box.querySelectorAll('[data-dl]').forEach(b => b.onclick = () => downloadSite(b.dataset.dl));
-  updateStoragePill();
-}
-
-function deleteSite(name){
-  if (!confirm('Delete "' + name + '"?')) return;
-  localStorage.removeItem(SITE_PREFIX + name);
-  if (currentSite === name){
-    $('resultBox').style.display = 'none';
-    $('emptyResult').style.display = 'block';
-    $('deployBox').style.display = 'none';
-    $('emptyDeploy').style.display = 'block';
-    currentSite = null;
+  function updateSlugPreview() {
+    var raw = $('siteName').value.trim();
+    if (!raw) {
+      $('slugPreview').innerHTML =
+        'Project: <b>—</b>' +
+        '<span class="note">Live URL deploy ke baad assign hoga (Vercel decide karta hai).</span>';
+    } else {
+      var base = slugify(raw);
+      var shown = $('cleanUrl').checked ? base : base + '-xxxx';
+      var note = $('cleanUrl').checked
+        ? 'Clean URL try hoga — server par naam taken ho to suffix add ho sakta hai.'
+        : 'Random suffix auto-add hoga taake koi collision na ho.';
+      $('slugPreview').innerHTML =
+        'Project: <b>' + escapeHtml(shown) + '</b>' +
+        '<span class="note">' + escapeHtml(note) + ' Live URL deploy ke baad milega.</span>';
+    }
+    updateDeployState();
   }
-  renderSites();
-  toast('Site deleted');
-}
 
-function downloadSite(name){
-  const raw = localStorage.getItem(SITE_PREFIX + name);
-  if (!raw){ toast('Site not found', 'error'); return; }
-  let data;
-  try { data = JSON.parse(raw); } catch(e){ toast('Corrupt data', 'error'); return; }
+  function updateDeployState() {
+    var nameOk = !!$('siteName').value.trim();
+    var blocked = isDeploying || !files.length || !hasIndex() || !nameOk
+               || totalSize() > MAX_TOTAL_BYTES;
+    $('deployBtn').disabled = blocked;
+    $('previewBtn').disabled = isDeploying || !hasIndex();
+  }
 
-  data.files.forEach((f, i) => {
-    setTimeout(() => {
-      let blob;
-      if (f.type === 'text'){
-        const mime =
-          f.name.endsWith('.html')||f.name.endsWith('.htm') ? 'text/html' :
-          f.name.endsWith('.css') ? 'text/css' :
-          f.name.endsWith('.js') ? 'application/javascript' :
-          f.name.endsWith('.json') ? 'application/json' :
-          f.name.endsWith('.svg') ? 'image/svg+xml' :
-          'text/plain';
-        blob = new Blob([f.content], {type: mime});
+  function updateSteps() {
+    var s1 = $('stepInd1'), s2 = $('stepInd2'), s3 = $('stepInd3');
+    s1.className = 'step-ind ' + (files.length ? 'done' : 'active');
+    s2.className = 'step-ind ' + ($('siteName').value.trim() ? 'done' : (files.length ? 'active' : ''));
+    s3.className = 'step-ind ' + (deployedUrl ? 'done' : ($('siteName').value.trim() && files.length ? 'active' : ''));
+  }
+
+  /* ================= PREVIEW ================= */
+  function previewIndex() {
+    var idx = null;
+    for (var i = 0; i < files.length; i++) {
+      if (files[i].name.toLowerCase() === 'index.html') { idx = files[i]; break; }
+    }
+    if (!idx) { toast('index.html nahi hai', 'error'); return; }
+    try {
+      var bin = atob(idx.data);
+      var arr = new Uint8Array(bin.length);
+      for (var j = 0; j < bin.length; j++) arr[j] = bin.charCodeAt(j);
+      var blob = new Blob([arr], { type: idx.mime || 'text/html' });
+      var url = (window.URL || window.webkitURL).createObjectURL(blob);
+      window.open(url, '_blank');
+      toast('Preview khul gayi — CSS/JS/images sirf live site par load honge', 'success');
+      setTimeout(function () {
+        try { URL.revokeObjectURL(url); } catch (e) {}
+      }, 60000);
+    } catch (e) {
+      toast('Preview nahi khul saki', 'error');
+    }
+  }
+
+  /* ================= COPY ================= */
+  function copyText(text, okMsg) {
+    function done(ok) {
+      toast(ok ? okMsg : 'Copy nahi hua — manually select karo', ok ? 'success' : 'error');
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
       } else {
-        const [head, b64] = String(f.content).split(',');
-        const mime = (head.match(/:(.*?);/)||[])[1] || 'application/octet-stream';
-        const bin = atob(b64);
-        const arr = new Uint8Array(bin.length);
-        for (let j=0;j<bin.length;j++) arr[j]=bin.charCodeAt(j);
-        blob = new Blob([arr], {type: mime});
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        done(ok);
       }
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = f.name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
-    }, i * 220);
-  });
-  toast('Downloading ' + data.files.length + ' file(s)...');
-}
-
-/* ===== EVENTS ===== */
-$('sitename').addEventListener('input', () => validateName(true));
-$('createBtn').addEventListener('click', createWebsite);
-$('sitename').addEventListener('keydown', e => { if (e.key==='Enter') createWebsite(); });
-
-$('fileInput').addEventListener('change', e => {
-  addFiles(e.target.files);
-  e.target.value = '';
-});
-
-$('clearFiles').addEventListener('click', () => {
-  if (!files.size) return;
-  if (!confirm('Remove all files?')) return;
-  files.clear();
-  renderFiles();
-});
-
-const dz = $('dropzone');
-dz.addEventListener('click', () => $('fileInput').click());
-['dragenter','dragover'].forEach(ev => {
-  dz.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dz.classList.add('drag'); });
-});
-['dragleave','drop'].forEach(ev => {
-  dz.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('drag'); });
-});
-dz.addEventListener('drop', e => {
-  if (e.dataTransfer.files && e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
-});
-
-$('copyLink').addEventListener('click', async () => {
-  const val = $('siteLink').value;
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      await navigator.clipboard.writeText(val);
-    } else {
-      $('siteLink').select();
-      document.execCommand('copy');
-    }
-    $('copyLink').textContent = '✓';
-    toast('Link copied', 'success');
-    setTimeout(()=>$('copyLink').textContent='Copy', 1500);
-  } catch(e){ toast('Copy failed', 'error'); }
-});
-
-$('downloadAll').addEventListener('click', () => {
-  if (currentSite) downloadSite(currentSite);
-});
-
-$('deployBtn').addEventListener('click', deployToHosting);
-
-$('copyDeploy').addEventListener('click', async () => {
-  const val = $('deployLink').value;
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      await navigator.clipboard.writeText(val);
-    } else {
-      $('deployLink').select();
-      document.execCommand('copy');
-    }
-    $('copyDeploy').textContent = '✓';
-    toast('Link copied', 'success');
-    setTimeout(()=>$('copyDeploy').textContent='Copy', 1500);
-  } catch(e){ toast('Copy failed', 'error'); }
-});
-
-$('clearAll').addEventListener('click', () => {
-  const sites = getSites();
-  if (!sites.length) return;
-  if (!confirm('Delete ALL ' + sites.length + ' site(s)? This cannot be undone.')) return;
-  sites.forEach(s => localStorage.removeItem(s.key));
-  if (currentSite){
-    $('resultBox').style.display='none';
-    $('emptyResult').style.display='block';
-    $('deployBox').style.display='none';
-    $('emptyDeploy').style.display='block';
-    currentSite = null;
+    } catch (e) { done(false); }
   }
+
+  /* ================= SITES ================= */
+  function getSites() {
+    try { return JSON.parse(localStorage.getItem(SITES_KEY) || '[]'); } catch (e) { return []; }
+  }
+  function saveSite(name, url) {
+    var sites = getSites().filter(function (s) { return s.name !== name; });
+    sites.unshift({ name: name, url: url, date: Date.now() });
+    try { localStorage.setItem(SITES_KEY, JSON.stringify(sites)); } catch (e) {}
+  }
+  function deleteSite(name) {
+    var rest = getSites().filter(function (x) { return x.name !== name; });
+    try { localStorage.setItem(SITES_KEY, JSON.stringify(rest)); } catch (e) {}
+    renderSites(); updateSteps();
+  }
+  function renderSites() {
+    var sites = getSites();
+    var box = $('sitesList');
+    $('clearSites').style.display = sites.length ? 'inline' : 'none';
+    if (!sites.length) {
+      box.innerHTML = '<div class="empty-sites">Abhi koi site deploy nahi ki. Pehli site deploy karo — yahan aa jayegi.</div>';
+      return;
+    }
+    box.innerHTML = '';
+    sites.forEach(function (s) {
+      var safe = safeUrl(s.url);
+      if (!safe) return;
+      var el = document.createElement('div');
+      el.className = 'site-item';
+      el.innerHTML =
+        '<div class="si-dot"></div>' +
+        '<div class="si-main">' +
+          '<div class="si-name">' + escapeHtml(s.name) + '</div>' +
+          '<div class="si-meta"><a href="' + escapeHtml(safe) + '" target="_blank" rel="noopener">' +
+          escapeHtml(s.url) + '</a> · ' + new Date(s.date).toLocaleDateString() + '</div>' +
+        '</div>' +
+        '<div class="si-actions">' +
+          '<button type="button" class="copy" title="Copy link">📋</button>' +
+          '<button type="button" class="del" title="Delete">✕</button>' +
+        '</div>';
+      el.querySelector('.copy').addEventListener('click', function () {
+        copyText(s.url, 'Link copy ho gaya ✔️');
+      });
+      el.querySelector('.del').addEventListener('click', function () {
+        if (confirm('Site delete kar dun? (Vercel par site rahegi, sirf yahan se hategi)')) {
+          deleteSite(s.name);
+        }
+      });
+      box.appendChild(el);
+    });
+  }
+
+  /* ================= PROGRESS ================= */
+  function startProgress() {
+    $('progressWrap').classList.add('show');
+    $('progressBar').style.width = '3%';
+    $('progressLabel').textContent = 'Files prepare ho rahi hain...';
+    var pct = 3;
+    progressTimer = setInterval(function () {
+      pct = Math.min(pct + 2.5, 88);
+      $('progressBar').style.width = pct + '%';
+      if (pct > 65) $('progressLabel').textContent = 'Vercel par build ho rahi hai...';
+      else if (pct > 30) $('progressLabel').textContent = 'Server par upload...';
+    }, 260);
+  }
+  function finishProgress(msg, ok) {
+    clearInterval(progressTimer);
+    $('progressBar').style.width = '100%';
+    $('progressBar').style.background = ok
+      ? 'linear-gradient(90deg, var(--green), #4ade80)'
+      : 'linear-gradient(90deg, var(--red), #ff8095)';
+    $('progressLabel').textContent = msg;
+    setTimeout(function () {
+      $('progressWrap').classList.remove('show');
+      $('progressBar').style.width = '0%';
+    }, ok ? 1600 : 2800);
+  }
+
+  /* ================= DEPLOY ================= */
+  async function doDeploy() {
+    var msg = $('deployMsg');
+    msg.textContent = '';
+    msg.classList.remove('ok');
+
+    var slug = resolveSlug();
+    var btn = $('deployBtn');
+    isDeploying = true;
+    updateDeployState();
+    btn.textContent = '⏳ DEPLOYING...';
+    startProgress();
+
+    try {
+      var res = await fetch(DEPLOY_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: slug,
+          files: files.map(function (f) { return { name: f.name, data: f.data }; })
+        })
+      });
+
+      var json = null;
+      try { json = await res.json(); } catch (e) { json = {}; }
+
+      // Handle specific statuses clearly
+      if (res.status === 413) {
+        throw new Error('Files bahut badi hain — server ne reject kiya. Total 3MB se kam karo.');
+      }
+      if (res.status === 429) {
+        throw new Error('Bohot zyada requests — 1 minute baad try karo.');
+      }
+      if (!res.ok || (json && json.error)) {
+        var errMsg = (json && json.error) || ('Deployment failed (HTTP ' + res.status + ')');
+        if (res.status === 400 && /html and name required/i.test(errMsg)) {
+          throw new Error('Server par naya deploy.js (v4) lagana baaki hai — sajeel-hosting repo mein api/deploy.js replace karo, phir dobara Deploy dabao.');
+        }
+        throw new Error(errMsg);
+      }
+      if (!json || !json.url) throw new Error('Server ne live link nahi bheja.');
+
+      var safe = safeUrl(json.url);
+      if (!safe) throw new Error('Server ne invalid link bheja.');
+
+      deployedUrl = safe;
+      $('deployLink').value = safe;
+      $('openDeploy').href = safe;
+      $('deployBox').classList.add('show');
+      $('deployNote').textContent = json.aliasError
+        ? 'Site live hai, lekin clean alias nahi laga (' + json.aliasError + ') — upar wala link phir bhi kaam karega.'
+        : 'Tumhari site live hai: ' + safe;
+      saveSite(slug, safe);
+      renderSites();
+      updateSteps();
+      msg.textContent = 'Deploy ho gaya! ✔️';
+      msg.classList.add('ok');
+      finishProgress('✔️ Deploy successful!', true);
+      toast('Deployed successfully!', 'success');
+    } catch (err) {
+      var m = err && err.message ? err.message : 'Deployment failed. Dobara try karo.';
+      if (/Failed to fetch|NetworkError|Load failed/i.test(m)) {
+        m = 'Internet check karo — server se connect nahi ho saka.';
+      }
+      msg.textContent = m;
+      finishProgress('❌ ' + m, false);
+      toast('Deploy failed', 'error');
+    } finally {
+      isDeploying = false;
+      btn.textContent = '🚀 DEPLOY — Live Link Lo';
+      updateDeployState();
+    }
+  }
+
+  /* ================= RESET ================= */
+  function resetAll(confirmFirst) {
+    if (confirmFirst && files.length && !confirm('Saari files aur naam clear kar dun?')) return;
+    files = [];
+    $('siteName').value = '';
+    deployedUrl = null;
+    $('deployBox').classList.remove('show');
+    $('deployLink').value = '';
+    $('deployMsg').textContent = '';
+    $('deployMsg').classList.remove('ok');
+    renderFiles();
+    updateSlugPreview();
+    updateSteps();
+    toast('Reset ho gaya');
+  }
+
+  /* ================= EVENTS ================= */
+  $('copyDeployBtn').addEventListener('click', function () {
+    var btn = this;
+    copyText($('deployLink').value, 'Link copy ho gaya ✔️');
+    btn.classList.add('copied');
+    btn.textContent = '✓';
+    setTimeout(function () { btn.classList.remove('copied'); btn.textContent = 'Copy'; }, 1600);
+  });
+
+  $('previewBtn').addEventListener('click', previewIndex);
+  $('deployBtn').addEventListener('click', doDeploy);
+  $('resetBtn').addEventListener('click', function () { resetAll(true); });
+
+  $('clearSites').addEventListener('click', function () {
+    if (!confirm('Saari saved sites delete kar dun? (Vercel par sites rahengi)')) return;
+    try { localStorage.removeItem(SITES_KEY); } catch (e) {}
+    renderSites();
+  });
+
+  $('fileInput').addEventListener('change', function (e) {
+    addFiles(Array.prototype.slice.call(e.target.files));
+    e.target.value = '';
+  });
+  $('folderInput').addEventListener('change', function (e) {
+    addFiles(Array.prototype.slice.call(e.target.files));
+    e.target.value = '';
+  });
+  $('browseFilesBtn').addEventListener('click', function () { $('fileInput').click(); });
+  $('browseFolderBtn').addEventListener('click', function () { $('folderInput').click(); });
+
+  $('clearFiles').addEventListener('click', function () {
+    if (!files.length) return;
+    if (!confirm('Saari files hata dun?')) return;
+    files = [];
+    renderFiles(); updateDeployState(); updateSteps();
+  });
+
+  var dz = $('dropzone');
+  dz.addEventListener('click', function (e) {
+    if (e.target.tagName === 'INPUT') return;
+    $('fileInput').click();
+  });
+  dz.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('fileInput').click(); }
+  });
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      dz.classList.add('drag');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    dz.addEventListener(ev, function (e) {
+      e.preventDefault(); e.stopPropagation();
+      if (ev === 'dragleave' && dz.contains(e.relatedTarget)) return;
+      dz.classList.remove('drag');
+    });
+  });
+  dz.addEventListener('drop', async function (e) {
+    var dt = e.dataTransfer;
+    if (!dt) return;
+    var items = await filesFromDataTransfer(dt);
+    if (items.length) addFiles(items);
+  });
+
+  $('siteName').addEventListener('input', function () {
+    updateSlugPreview();
+    updateSteps();
+  });
+  $('cleanUrl').addEventListener('change', updateSlugPreview);
+
+  /* ================= INIT ================= */
+  renderFiles();
   renderSites();
-  toast('All sites deleted');
-});
+  updateSlugPreview();
+  updateSteps();
+  updateDeployState();
 
-/* ===== INIT ===== */
-renderFiles();
-renderSites();
-validateName(true);
-
-// Load sample on first visit
-if (!localStorage.getItem('sm_first_visit')){
-  localStorage.setItem('sm_first_visit', '1');
-  // optional: prefill some sample? (keep empty for clean start)
-}
-
+  /* ================= TEST HOOK ================= */
+  window.SajeelHosting = {
+    slugify: slugify,
+    resolveSlug: resolveSlug,
+    addFiles: addFiles,
+    getFiles: function () { return files; },
+    getSites: getSites,
+    reset: function () { resetAll(false); },
+    config: {
+      MAX_TOTAL_BYTES: MAX_TOTAL_BYTES,
+      MAX_FILE_BYTES: MAX_FILE_BYTES,
+      WARN_TOTAL_BYTES: WARN_TOTAL_BYTES
+    }
+  };
 })();
 </script>
 </body>
